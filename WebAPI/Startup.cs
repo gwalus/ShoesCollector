@@ -1,4 +1,6 @@
 using DatabaseCore.DataContext;
+using DatabaseCore.Repositories;
+using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +28,9 @@ namespace WebAPI
                     options.UseNpgsql(
                         Configuration.GetConnectionString("DefaultConnection"),
                         x => x.MigrationsAssembly("DatabaseCore.Migrations")));
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddControllers();
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });

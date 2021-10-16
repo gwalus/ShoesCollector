@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DatabaseCore.Migrations\DatabaseCore.Migrations.csproj" />
     <ProjectReference Include="..\DatabaseCore\DatabaseCore.csproj" />
   </ItemGroup>
