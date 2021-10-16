@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using WebAPI.Extensions;
 
 namespace WebAPI
 {
@@ -28,7 +29,7 @@ namespace WebAPI
                     options.UseNpgsql(
                         Configuration.GetConnectionString("DefaultConnection"),
                         x => x.MigrationsAssembly("DatabaseCore.Migrations")));
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddApplicationRepositories();
             services.AddControllers();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddSwaggerGen(c =>
