@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace DatabaseCore.Migrations.Migrations.Postgres
+namespace DatabaseCore.Migrations.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -18,6 +18,63 @@ namespace DatabaseCore.Migrations.Migrations.Postgres
                 .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.1");
+
+            modelBuilder.Entity("DatabaseCore.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<bool?>("Box")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateOfPurchase")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsSold")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("PriceWithoutShipping")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("Profit")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("PurchasePrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("SaleDate")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("SellingPrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("ShippingPrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
