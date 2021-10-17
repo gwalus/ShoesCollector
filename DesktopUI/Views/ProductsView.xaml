@@ -35,15 +35,15 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="Only sold" Command="{Binding GetSoldProductsCommand}">
+                    <MenuItem Header="Only available" Command="{Binding GetProductsCommand}" CommandParameter="Available">
                         <MenuItem.Icon>
-                            <materialDesing:PackIcon Kind="Sale" HorizontalAlignment="Center"/>
+                            <materialDesing:PackIcon Kind="EventAvailable" HorizontalAlignment="Center"/>
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="Only available" Command="{Binding GetAvailableProductsCommand}">
+                    <MenuItem Header="Only sold" Command="{Binding GetProductsCommand}" CommandParameter="Sold">
                         <MenuItem.Icon>
-                            <materialDesing:PackIcon Kind="EventAvailable" HorizontalAlignment="Center"/>
+                            <materialDesing:PackIcon Kind="Sale" HorizontalAlignment="Center"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
