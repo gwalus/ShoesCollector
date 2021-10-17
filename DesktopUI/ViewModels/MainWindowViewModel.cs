@@ -2,6 +2,7 @@
 using Domain.Helpers.Settings;
 using Domain.Helpers.Urls;
 using Domain.Interfaces.Clients;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace DesktopUI.ViewModels
     {
         private string _title = "Prism Application";
         private readonly IBaseRestClient _restClient;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         public string Title
         {
@@ -20,11 +22,11 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        public MainWindowViewModel(IBaseRestClient restClient)
+        public MainWindowViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator)
         {
             _restClient = restClient;
-
-            Task.Run(async () => await DoSomething());
+            _dialogCoordinator = dialogCoordinator;
+            Task.Run(async () => await DoSomething());            
         }
 
         private async Task DoSomething()

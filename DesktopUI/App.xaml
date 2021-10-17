@@ -4,6 +4,33 @@
              xmlns:local="clr-namespace:DesktopUI"
              xmlns:prism="http://prismlibrary.com/">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <!-- Theme setting -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Taupe.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="Border" x:Key="DataBorder">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Width" Value="225"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="BorderThickness" Value="0 0 1 0"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="Padding" Value="5 5 15 5"/>
+            </Style>
+
+            <Style TargetType="Button" x:Key="DataConfirmButton">
+                <Setter Property="Margin" Value="5 10"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Background" Value="Coral"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>
