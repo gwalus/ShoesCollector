@@ -1,12 +1,6 @@
-﻿using Domain.Entities;
-using Domain.Helpers.Settings;
-using Domain.Helpers.Urls;
-using Domain.Interfaces.Clients;
+﻿using Domain.Interfaces.Clients;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Mvvm;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DesktopUI.ViewModels
 {
@@ -22,21 +16,17 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        public MainWindowViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator)
+        private ProductsViewViewModel _productsViewViewModel;
+
+        public ProductsViewViewModel ProductsViewViewModel
         {
-            _restClient = restClient;
-            _dialogCoordinator = dialogCoordinator;
-            Task.Run(async () => await DoSomething());            
+            get { return _productsViewViewModel; }            
+            set { SetProperty(ref _productsViewViewModel, value); }
         }
 
-        private async Task DoSomething()
+        public MainWindowViewModel(ProductsViewViewModel productsViewViewModel)
         {
-            var response = await _restClient.CallAsync<List<Product>>(new RestClientSettings
-            {
-                Endpoint = ApiUrl.Products
-            });
-
-            Title = response.FirstOrDefault().Name;
+            ProductsViewViewModel = productsViewViewModel;
         }
     }
 }
