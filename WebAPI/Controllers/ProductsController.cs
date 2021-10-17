@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Helpers.Filters;
 using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsAsync([FromQuery]ProductFilter productFilter)
         {
-            return await _productRepository.GetAll();
+            return Ok(await _productRepository.GetAll(productFilter));
         }
     }
 }
