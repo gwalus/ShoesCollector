@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Helpers.Settings;
 using Domain.Helpers.Urls;
 using Domain.Interfaces.Clients;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,12 +13,8 @@ using System.Threading.Tasks;
 namespace DesktopUI.ViewModels
 {
     public class ProductsViewViewModel : BindableBase
-    {
-        #region Fields
-        //private readonly IDataRepository _dataRepository;
-        //private readonly IDialogCoordinator _dialogCoordinator;
-        //private readonly DataContext _context;
-        #endregion
+    {        
+        private readonly IDialogCoordinator _dialogCoordinator;        
 
         private bool _addProductPanelVisible;
 
@@ -72,8 +69,8 @@ namespace DesktopUI.ViewModels
         {
             get { return _products; }
             set { SetProperty(ref _products, value); }
-            //OnPropertyChanged(nameof(Products));
         }
+
 
         private string _textBoxSearch;
         private readonly IBaseRestClient _restClient;
@@ -131,11 +128,9 @@ namespace DesktopUI.ViewModels
         //}
         #endregion
         
-        public ProductsViewViewModel(IBaseRestClient restClient)
+        public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator)
         {
-            //_dataRepository = dataRepository;
-            //_dialogCoordinator = dialogCoordinator;
-            //_context = dbContext;
+            _dialogCoordinator = dialogCoordinator;
 
             GetProductsCommand = new GetProductsCommand(this);
             //GetAvailableProductsCommand = new GetAvailableProductsCommand(this);
@@ -153,21 +148,16 @@ namespace DesktopUI.ViewModels
 
         public async void GetProducts()
         {
-            //var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Loading products...");
-            //controller.SetIndeterminate();
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Loading products...");
+            controller.SetIndeterminate();
 
-            //var products = await _dataRepository.GetProducts();
             var products = await _restClient.CallAsync<List<Product>>(new RestClientSettings
             {
                 Endpoint = ApiUrl.Products
             });
-
-
-
-            //SetTotalsViewModel(products);
             Products = new ObservableCollection<Product>(products);
 
-            //await controller.CloseAsync();
+            await controller.CloseAsync();
         }
 
         //public async void GetAvailableProducts()
