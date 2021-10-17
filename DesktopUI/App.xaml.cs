@@ -2,6 +2,7 @@
 using DesktopUI.ViewModels;
 using DesktopUI.Views;
 using Domain.Interfaces.Clients;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Ioc;
 using RestSharp;
 using System.Windows;
@@ -22,6 +23,8 @@ namespace DesktopUI
         {
             containerRegistry.RegisterScoped<IBaseRestClient, BaseRestClient>();
             containerRegistry.RegisterInstance<IRestClient>(new RestClient());
+
+            containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
         }
     }
 }

@@ -1,10 +1,46 @@
-﻿<Window x:Class="DesktopUI.Views.MainWindow"
+﻿<mah:MetroWindow x:Class="DesktopUI.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:converters="clr-namespace:DesktopUI.Converters"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525" >
-    <Grid>
+        xmlns:views="clr-namespace:DesktopUI.Views"
+        Title="{Binding Title}" MinHeight="620" MinWidth="800" WindowStartupLocation="CenterScreen">
+    <!--<Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+    </Grid>-->
+
+    <mah:MetroWindow.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </mah:MetroWindow.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0">
+            <TabItem Header="Products">
+                <views:ProductsView DataContext="{Binding ProductsViewViewModel}"/>
+            </TabItem>
+
+            <TabItem Header="Statistics">
+                <!--<views:StatisticsPage DataContext="{Binding StatisticsViewModel}"/>-->
+            </TabItem>
+
+            <TabItem Header="Charts">
+                <!--<views:ChartsPage DataContext="{Binding ChartsViewModel}"/>-->
+            </TabItem>
+
+        </TabControl>
+
+        <Border Grid.Row="1" 
+            BorderThickness="1" 
+            BorderBrush="White" 
+            Margin="2">
+            <!--<views:TotalsUserControl DataContext="{Binding ProductsViewModel.TotalsViewModel}"/>-->
+        </Border>
     </Grid>
-</Window>
+</mah:MetroWindow>
