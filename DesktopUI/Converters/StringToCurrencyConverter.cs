@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace DesktopUI.Converters
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class StringToCurrencyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((bool)value)
-                return Visibility.Visible;
-            
-            return Visibility.Collapsed;
+            if (value != null)
+            {
+                var cultureInfo = CultureInfo.GetCultureInfo("pl-PL");
+                return string.Format(cultureInfo, "{0:C}", value);
+            }
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
