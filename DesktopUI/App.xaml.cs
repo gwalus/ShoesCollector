@@ -1,5 +1,9 @@
-﻿using DesktopUI.Views;
+﻿using DesktopUI.Services;
+using DesktopUI.ViewModels;
+using DesktopUI.Views;
+using Domain.Interfaces.Clients;
 using Prism.Ioc;
+using RestSharp;
 using System.Windows;
 
 namespace DesktopUI
@@ -16,7 +20,8 @@ namespace DesktopUI
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterScoped<IBaseRestClient, BaseRestClient>();
+            containerRegistry.RegisterInstance<IRestClient>(new RestClient());
         }
     }
 }
