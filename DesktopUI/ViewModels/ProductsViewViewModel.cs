@@ -1,5 +1,6 @@
 ﻿using DesktopUI.Commands;
 using Domain.Entities;
+using Domain.Helpers.Filters;
 using Domain.Helpers.Settings;
 using Domain.Helpers.Urls;
 using Domain.Interfaces.Clients;
@@ -7,8 +8,8 @@ using MahApps.Metro.Controls.Dialogs;
 using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace DesktopUI.ViewModels
 {
@@ -91,12 +92,11 @@ namespace DesktopUI.ViewModels
 
         #region Commands
         public GetProductsCommand GetProductsCommand { get; set; }
-        //public GetAvailableProductsCommand GetAvailableProductsCommand { get; set; }
-        //public GetSoldProductsCommand GetSoldProductsCommand { get; set; }
+
         //public ShowUpdatingProductPanelCommand ShowUpdatingProductPanelCommand { get; set; }
         //public ShowNewProductPanelCommand ShowNewProductPanelCommand { get; set; }
         //public SelectedCellsChanged SelectedCellsChanged { get; set; }
-        //public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }
+        public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }
         #endregion
 
         //public TestCommand Test { get; set; }
@@ -133,12 +133,11 @@ namespace DesktopUI.ViewModels
             _dialogCoordinator = dialogCoordinator;
 
             GetProductsCommand = new GetProductsCommand(this);
-            //GetAvailableProductsCommand = new GetAvailableProductsCommand(this);
-            //GetSoldProductsCommand = new GetSoldProductsCommand(this);
+            
             //ShowNewProductPanelCommand = new ShowNewProductPanelCommand(this);
             //ShowUpdatingProductPanelCommand = new ShowUpdatingProductPanelCommand(this);
             //SelectedCellsChanged = new SelectedCellsChanged(this);
-            //SearchProductInGoogleCommand = new SearchProductInGoogleCommand(this);
+            SearchProductInGoogleCommand = new SearchProductInGoogleCommand(this);
             //AddProductViewModel = new AddProductViewModel(this, dataRepository, dialogCoordinator);
 
             //Test = new TestCommand(this);
@@ -146,47 +145,27 @@ namespace DesktopUI.ViewModels
             _restClient = restClient;
         }
 
-        public async void GetProducts()
+        public async void GetProducts(ProductFilter filter)
         {
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Loading products...");
             controller.SetIndeterminate();
 
-            var products = await _restClient.CallAsync<List<Product>>(new RestClientSettings
+            var restClientSettings = new RestClientSettings
             {
                 Endpoint = ApiUrl.Products
-            });
+            };
+
+            if (filter.Condition != null)
+            {
+                restClientSettings.QueryStringParameters = new Dictionary<string, string>();
+                restClientSettings.QueryStringParameters.Add(nameof(filter.Condition), filter.Condition);
+            }
+
+            var products = await _restClient.CallAsync<List<Product>>(restClientSettings);
             Products = new ObservableCollection<Product>(products);
 
             await controller.CloseAsync();
         }
-
-        //public async void GetAvailableProducts()
-        //{
-        //    var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Loading products...");
-        //    controller.SetIndeterminate();
-
-        //    var products = await _dataRepository.GetProducts();
-        //    var availableProducts = products.Where(product => product.IsSold == false).ToList();
-
-        //    SetTotalsViewModel(availableProducts);
-        //    Products = new ObservableCollection<Product>(availableProducts);
-
-        //    await controller.CloseAsync();
-        //}
-
-        //public async void GetSoldProducts()
-        //{
-        //    var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Loading products...");
-        //    controller.SetIndeterminate();
-
-        //    var products = await _dataRepository.GetProducts();
-        //    var soldProducts = products.Where(product => product.IsSold).ToList();
-
-        //    SetTotalsViewModel(soldProducts);
-        //    Products = new ObservableCollection<Product>(soldProducts);
-
-        //    await controller.CloseAsync();
-        //}
 
         //private async void GetSearchedProducts(string name)
         //{
@@ -223,35 +202,32 @@ namespace DesktopUI.ViewModels
         //    else UpdatingProductPanelVisible = true;
         //}
 
-        //public void SearchProductInGoogle(string url)
-        //{
-        //    //Process.Start(wwwPath);
-
-        //    try
-        //    {
-        //        Process.Start(url);
-        //    }
-        //    catch
-        //    {
-        //        // hack because of this: https://github.com/dotnet/corefx/issues/10361
-        //        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        //        {
-        //            url = url.Replace("&", "^&");
-        //            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-        //        }
-        //        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        //        {
-        //            Process.Start("xdg-open", url);
-        //        }
-        //        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        //        {
-        //            Process.Start("open", url);
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //}
+        public void SearchProductInGoogle(string url)
+        {
+            try
+            {
+                Process.Start(url);
+            }
+            catch
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    url = url.Replace("&", "^&");
+                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
     }
 }
