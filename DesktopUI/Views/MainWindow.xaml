@@ -5,6 +5,7 @@
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:converters="clr-namespace:DesktopUI.Converters"
         prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:views="clr-namespace:DesktopUI.Views"
         Title="{Binding Title}" MinHeight="620" MinWidth="800" WindowStartupLocation="CenterScreen">
     <!--<Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
@@ -22,7 +23,7 @@
 
         <TabControl Grid.Row="0">
             <TabItem Header="Products">
-                <!--<views:ProductsPage DataContext="{Binding ProductsViewModel}"/>-->
+                <views:ProductsView DataContext="{Binding ProductsViewViewModel}"/>
             </TabItem>
 
             <TabItem Header="Statistics">
