@@ -53,9 +53,9 @@ namespace DatabaseCore.Repositories
             return CalculateToDays(dateLatestSale);
         }
 
-        public Task<Product> GetFirstPurchase()
+        public async Task<Product> GetFirstPurchase()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Products.FirstOrDefaultAsync();
         }
 
         public Task<Product> GetLatestPurchase()
