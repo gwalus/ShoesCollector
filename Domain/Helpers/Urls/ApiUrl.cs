@@ -6,6 +6,7 @@
 
         public const string Products = "products";
         public const string Statistics = "statistics";
+        public const string Totals = "totals";
 
         public const string FirstPurchase = "/first-purchase";
         public const string LatestPurchase = "/latest-purchase";
