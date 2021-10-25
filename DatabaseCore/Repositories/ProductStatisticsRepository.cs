@@ -21,9 +21,9 @@ namespace DatabaseCore.Repositories
             return await _dbContext.Products.MaxAsync(p => p.Profit.GetValueOrDefault());
         }
 
-        public Task<double> GetBiggestPurchase()
+        public async Task<double> GetBiggestPurchase()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Products.MaxAsync(p => p.PurchasePrice);
         }
 
         public Task<int> GetDaysOfFirstPurchase()
