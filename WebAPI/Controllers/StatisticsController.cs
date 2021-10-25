@@ -31,5 +31,11 @@ namespace WebAPI.Controllers
         {
             return Ok(await _productStatisticsRepository.GetLatestPurchaseAsync());
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Product>> GetLatestSale()
+        {
+            return Ok(await _productStatisticsRepository.GetLatestSaleAsync());
+        }
     }
 }
