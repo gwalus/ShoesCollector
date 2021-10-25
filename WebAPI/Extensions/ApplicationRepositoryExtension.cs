@@ -8,7 +8,12 @@ namespace WebAPI.Extensions
     {
         public static IServiceCollection AddApplicationRepositories(this IServiceCollection services)
         {
-            return services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductStatisticsRepository, ProductStatisticsRepository>();
+            services.AddScoped<IProductDatesStatisticsRepository, ProductStatisticsRepository>();
+            services.AddScoped<IProductPricesStatisticsRepository, ProductStatisticsRepository>();
+
+            return services;
         }
     }
 }
