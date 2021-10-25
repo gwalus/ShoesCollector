@@ -17,49 +17,49 @@ namespace DatabaseCore.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<double> GetBestProfit()
+        public async Task<double> GetBestProfitAsync()
         {
             return await _dbContext.Products.MaxAsync(p => p.Profit.GetValueOrDefault());
         }
 
-        public async Task<double> GetBiggestPurchase()
+        public async Task<double> GetBiggestPurchaseAsync()
         {
             return await _dbContext.Products.MaxAsync(p => p.PurchasePrice);
         }
 
-        public async Task<int> GetDaysOfFirstPurchase()
+        public async Task<int> GetDaysOfFirstPurchaseAsync()
         {
-            var firstPurchase = await GetFirstPurchase();
+            var firstPurchase = await GetFirstPurchaseAsync();
 
             var dateFirstPurchase = ConvertStringToDateTime(firstPurchase.DateOfPurchase);
 
             return CalculateToDays(dateFirstPurchase);
         }
 
-        public async Task<int> GetDaysOfLatestPurchase()
+        public async Task<int> GetDaysOfLatestPurchaseAsync()
         {
-            var latestPurchase = await GetLatestPurchase();
+            var latestPurchase = await GetLatestPurchaseAsync();
 
             var dateLatestPurchase = ConvertStringToDateTime(latestPurchase.DateOfPurchase);
 
             return CalculateToDays(dateLatestPurchase);
         }
 
-        public async Task<int> GetDaysOfLatestSale()
+        public async Task<int> GetDaysOfLatestSaleAsync()
         {
-            var latestSale = await GetLatestSale();
+            var latestSale = await GetLatestSaleAsync();
 
             var dateLatestSale = ConvertStringToDateTime(latestSale.SaleDate);
 
             return CalculateToDays(dateLatestSale);
         }
 
-        public async Task<Product> GetFirstPurchase()
+        public async Task<Product> GetFirstPurchaseAsync()
         {
             return await _dbContext.Products.FirstOrDefaultAsync();
         }
 
-        public async Task<Product> GetLatestPurchase()
+        public async Task<Product> GetLatestPurchaseAsync()
         {
             var latestPuchase = await _dbContext.Products.ToListAsync();
 
@@ -68,7 +68,7 @@ namespace DatabaseCore.Repositories
                 .FirstOrDefault();
         }
 
-        public async Task<Product> GetLatestSale()
+        public async Task<Product> GetLatestSaleAsync()
         {
             var latestSale = await _dbContext.Products.ToListAsync();
 
@@ -78,17 +78,17 @@ namespace DatabaseCore.Repositories
                 .FirstOrDefault();
         }
 
-        public async Task<double> GetLowestProfit()
+        public async Task<double> GetLowestProfitAsync()
         {
             return await _dbContext.Products.Where(p => p.Profit > 0).MinAsync(p => p.Profit.GetValueOrDefault());
         }
 
-        public async Task<double> GetLowestPurchase()
+        public async Task<double> GetLowestPurchaseAsync()
         {
             return await _dbContext.Products.MinAsync(p => p.PurchasePrice);
         }
 
         private DateTime ConvertStringToDateTime(string date) => DateTime.Parse(date);
-        private int CalculateToDays(DateTime date) => (DateTime.Now - date).Days;        
+        private int CalculateToDays(DateTime date) => (DateTime.Now - date).Days;
     }
 }
