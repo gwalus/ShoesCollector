@@ -68,9 +68,14 @@ namespace DatabaseCore.Repositories
                 .FirstOrDefault();
         }
 
-        public Task<Product> GetLatestSale()
+        public async Task<Product> GetLatestSale()
         {
-            throw new NotImplementedException();
+            var latestSale = await _dbContext.Products.ToListAsync();
+
+            return latestSale
+                .Where(p => !string.IsNullOrEmpty(p.SaleDate))
+                .OrderByDescending(p => DateTime.Parse(p.SaleDate))
+                .FirstOrDefault();
         }
 
         public Task<double> GetLowestProfit()
