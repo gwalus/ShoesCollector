@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DatabaseCore.Repositories
@@ -58,9 +59,13 @@ namespace DatabaseCore.Repositories
             return await _dbContext.Products.FirstOrDefaultAsync();
         }
 
-        public Task<Product> GetLatestPurchase()
+        public async Task<Product> GetLatestPurchase()
         {
-            throw new NotImplementedException();
+            var latestPuchase = await _dbContext.Products.ToListAsync();
+
+            return latestPuchase
+                .OrderByDescending(p => DateTime.Parse(p.DateOfPurchase))
+                .FirstOrDefault();
         }
 
         public Task<Product> GetLatestSale()
