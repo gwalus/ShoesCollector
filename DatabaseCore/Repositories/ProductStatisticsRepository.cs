@@ -44,9 +44,13 @@ namespace DatabaseCore.Repositories
             return CalculateToDays(dateLatestPurchase);
         }
 
-        public Task<int> GetDaysOfLatestSale()
+        public async Task<int> GetDaysOfLatestSale()
         {
-            throw new NotImplementedException();
+            var latestSale = await GetLatestSale();
+
+            var dateLatestSale = ConvertStringToDateTime(latestSale.SaleDate);
+
+            return CalculateToDays(dateLatestSale);
         }
 
         public Task<Product> GetFirstPurchase()
