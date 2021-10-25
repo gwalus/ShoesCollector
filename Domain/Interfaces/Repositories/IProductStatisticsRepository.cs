@@ -5,8 +5,8 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IProductStatisticsRepository
     {
-        Task<Product> GetFirstPurchase();
-        Task<Product> GetLatestPurchase();
-        Task<Product> GetLatestSale();
+        Task<Product> GetFirstPurchaseAsync();
+        Task<Product> GetLatestPurchaseAsync();
+        Task<Product> GetLatestSaleAsync();
     }
 }

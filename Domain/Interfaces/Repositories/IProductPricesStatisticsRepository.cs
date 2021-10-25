@@ -4,9 +4,9 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IProductPricesStatisticsRepository
     {
-        Task<double> GetBestProfit();
-        Task<double> GetLowestProfit();
-        Task<double> GetBiggestPurchase();
-        Task<double> GetLowestPurchase();
+        Task<double> GetBestProfitAsync();
+        Task<double> GetLowestProfitAsync();
+        Task<double> GetBiggestPurchaseAsync();
+        Task<double> GetLowestPurchaseAsync();
     }
 }
