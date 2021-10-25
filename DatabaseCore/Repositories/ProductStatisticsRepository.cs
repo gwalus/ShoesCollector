@@ -26,14 +26,18 @@ namespace DatabaseCore.Repositories
             return await _dbContext.Products.MaxAsync(p => p.PurchasePrice);
         }
 
-        public Task<int> GetDaysOfFirstPurchase()
+        public async Task<int> GetDaysOfFirstPurchase()
         {
-            throw new NotImplementedException();
+            var firstPurchase = await GetFirstPurchase();
+
+            var dateFirstPurchase = ConvertStringToDateTime(firstPurchase.DateOfPurchase);
+
+            return CalculateToDays(dateFirstPurchase);
         }
 
         public Task<int> GetDaysOfLatestPurchase()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();        
         }
 
         public Task<int> GetDaysOfLatestSale()
@@ -65,5 +69,8 @@ namespace DatabaseCore.Repositories
         {
             throw new NotImplementedException();
         }
+
+        private DateTime ConvertStringToDateTime(string date) => DateTime.Parse(date);
+        private int CalculateToDays(DateTime date) => (DateTime.Now - date).Days;        
     }
 }
