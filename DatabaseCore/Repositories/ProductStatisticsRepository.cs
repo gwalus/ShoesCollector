@@ -83,9 +83,9 @@ namespace DatabaseCore.Repositories
             return await _dbContext.Products.Where(p => p.Profit > 0).MinAsync(p => p.Profit.GetValueOrDefault());
         }
 
-        public Task<double> GetLowestPurchase()
+        public async Task<double> GetLowestPurchase()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Products.MinAsync(p => p.PurchasePrice);
         }
 
         private DateTime ConvertStringToDateTime(string date) => DateTime.Parse(date);
