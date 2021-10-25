@@ -162,8 +162,15 @@ namespace DesktopUI.ViewModels
             }
 
             var products = await _restClient.CallAsync<List<Product>>(restClientSettings);
-            Products = new ObservableCollection<Product>(products);
 
+            if (products == null)
+            {
+                await controller.CloseAsync();
+                await _dialogCoordinator.ShowMessageAsync(this, "Error", "Cannot load products");
+                return;
+            }
+
+            Products = new ObservableCollection<Product>(products);
             await controller.CloseAsync();
         }
 
