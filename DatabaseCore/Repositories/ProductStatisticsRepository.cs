@@ -78,9 +78,9 @@ namespace DatabaseCore.Repositories
                 .FirstOrDefault();
         }
 
-        public Task<double> GetLowestProfit()
+        public async Task<double> GetLowestProfit()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Products.Where(p => p.Profit > 0).MinAsync(p => p.Profit.GetValueOrDefault());
         }
 
         public Task<double> GetLowestPurchase()
