@@ -1,5 +1,7 @@
-﻿using Domain.Entities;
+﻿using DatabaseCore.DataContext;
+using Domain.Entities;
 using Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -7,9 +9,16 @@ namespace DatabaseCore.Repositories
 {
     public class ProductStatisticsRepository : IProductStatisticsRepository, IProductDatesStatisticsRepository, IProductPricesStatisticsRepository
     {
-        public Task<double> GetBestProfit()
+        private readonly ApplicationDbContext _dbContext;
+
+        public ProductStatisticsRepository(ApplicationDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+
+        public async Task<double> GetBestProfit()
+        {
+            return await _dbContext.Products.MaxAsync(p => p.Profit.GetValueOrDefault());
         }
 
         public Task<double> GetBiggestPurchase()
