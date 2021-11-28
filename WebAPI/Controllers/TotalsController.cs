@@ -1,5 +1,8 @@
-﻿using Domain.Interfaces.Repositories;
+﻿using Domain.Entities;
+using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -18,21 +21,20 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<decimal>> GetTotals([FromQuery] string type)
         {
-            switch (type)
+            Expression<Func<Product, double>> function = type switch
             {
-                case "purchase":
-                    return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(x => x.PurchasePrice));
-                case "sell":
-                    return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(x => x.SellingPrice.Value));
-                case "ship":
-                    return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(x => x.ShippingPrice.Value));
-                case "without-ship":
-                    return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(x => x.PriceWithoutShipping.Value));
-                case "profit":
-                    return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(x => x.Profit.Value));
-                default:
-                    return BadRequest("Choose a type to get total statistics");
-            }
+                "purchase" => x => x.PurchasePrice,
+                "sell" => x => x.SellingPrice ?? 0,
+                "ship" => x => x.ShippingPrice ?? 0,
+                "without-ship" => x => x.PriceWithoutShipping ?? 0,
+                "profit" => x => x.Profit ?? 0,
+                _ => null
+            };
+
+            if (function == null)
+                return BadRequest("Please pass correct condition and try again.");
+
+            return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(function));
         }
     }
 }
