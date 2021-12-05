@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Helpers.Urls;
 using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +10,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TotalsController : Controller
+    public class TotalsController : ControllerBase
     {
         private readonly ITotalsStatisticsRepository _totalsStatisticsRepository;
 
@@ -18,15 +19,16 @@ namespace WebAPI.Controllers
             _totalsStatisticsRepository = totalsStatisticsRepository;
         }
 
+        //[HttpGet(ApiUrl.Totals)]
         [HttpGet]
-        public async Task<ActionResult<decimal>> GetTotals([FromQuery] string type)
+        public async Task<ActionResult<decimal>> GetTotals([FromQuery] string type, [FromQuery]bool? isSold)
         {
             Expression<Func<Product, double>> function = type switch
             {
                 "purchase" => x => x.PurchasePrice,
                 "sell" => x => x.SellingPrice ?? 0,
                 "ship" => x => x.ShippingPrice ?? 0,
-                "without-ship" => x => x.PriceWithoutShipping ?? 0,
+                "withoutship" => x => x.PriceWithoutShipping ?? 0,
                 "profit" => x => x.Profit ?? 0,
                 _ => null
             };
@@ -34,7 +36,7 @@ namespace WebAPI.Controllers
             if (function == null)
                 return BadRequest("Please pass correct condition and try again.");
 
-            return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(function));
+            return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(function, isSold));
         }
     }
 }
