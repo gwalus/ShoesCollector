@@ -8,13 +8,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <WrapPanel>
-        <TextBox Width="120" Margin="5,0" metroControls:TextBoxHelper.Watermark="Brand" metroControls:TextBoxHelper.ClearTextButton="True"></TextBox>
-        <TextBox Width="120" Margin="5,0" metroControls:TextBoxHelper.Watermark="Name" metroControls:TextBoxHelper.ClearTextButton="True"></TextBox>
-        <TextBox Width="120" Margin="5,0" metroControls:TextBoxHelper.Watermark="Code" metroControls:TextBoxHelper.ClearTextButton="True"></TextBox>
-        <TextBox Width="120" Margin="5,0" metroControls:TextBoxHelper.Watermark="Color" metroControls:TextBoxHelper.ClearTextButton="True"></TextBox>
-        <TextBox Width="120" Margin="5,0" metroControls:TextBoxHelper.Watermark="Size" metroControls:TextBoxHelper.ClearTextButton="True"></TextBox>
-        <TextBox Width="120" Margin="5,0" metroControls:TextBoxHelper.Watermark="Source" metroControls:TextBoxHelper.ClearTextButton="True"></TextBox>
-        <CheckBox Margin="5,0">Box</CheckBox>
-        <Button Margin="10, 0">Search</Button>
+        <TextBox Width="120" Margin="5,1" metroControls:TextBoxHelper.Watermark="Brand" metroControls:TextBoxHelper.ClearTextButton="True" Text="{Binding ProductSearchFilterViewModel.Brand, Mode=TwoWay}"></TextBox>
+        <TextBox Width="120" Margin="5,1" metroControls:TextBoxHelper.Watermark="Name" metroControls:TextBoxHelper.ClearTextButton="True" Text="{Binding ProductSearchFilterViewModel.Name, Mode=OneWayToSource}"></TextBox>
+        <TextBox Width="120" Margin="5,1" metroControls:TextBoxHelper.Watermark="Code" metroControls:TextBoxHelper.ClearTextButton="True" Text="{Binding ProductSearchFilterViewModel.Code, Mode=OneWayToSource}"></TextBox>
+        <TextBox Width="120" Margin="5,1" metroControls:TextBoxHelper.Watermark="Color" metroControls:TextBoxHelper.ClearTextButton="True" Text="{Binding ProductSearchFilterViewModel.Color, Mode=OneWayToSource}"></TextBox>
+        <TextBox Width="120" Margin="5,1" metroControls:TextBoxHelper.Watermark="Size" metroControls:TextBoxHelper.ClearTextButton="True" Text="{Binding ProductSearchFilterViewModel.Size, Mode=OneWayToSource}"></TextBox>
+        <TextBox Width="120" Margin="5,1" metroControls:TextBoxHelper.Watermark="Source" metroControls:TextBoxHelper.ClearTextButton="True" Text="{Binding ProductSearchFilterViewModel.Source, Mode=OneWayToSource}"></TextBox>
+        <CheckBox Margin="5, 1" IsChecked="{Binding ProductSearchFilterViewModel.Box, Mode=OneWayToSource}">Box</CheckBox>
+        <Button Margin="10, 1" Command="{Binding ProductSearchFilterViewModel.SearchProductCommand}" CommandParameter="{Binding ProductSearchFilterViewModel}">Search</Button>
     </WrapPanel>
 </UserControl>

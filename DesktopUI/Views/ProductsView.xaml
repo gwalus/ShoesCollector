@@ -47,6 +47,12 @@
                             <materialDesing:PackIcon Kind="Sale" HorizontalAlignment="Center"/>
                         </MenuItem.Icon>
                     </MenuItem>
+
+                    <MenuItem Header="Search..." Command="{Binding ShowSearchBarCommand}">
+                        <MenuItem.Icon>
+                            <materialDesing:PackIcon Kind="Search" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="Action">
@@ -76,9 +82,8 @@
                                    Visibility="{Binding Products, Converter={StaticResource NullToVisibilityConverter}}"
                                    Margin="10, 10"/>-->
 
-            <userControls:SearchBarUserControl 
-                Width="auto" 
-                Visibility="{Binding Products, Converter={StaticResource NullToVisibilityConverter}}" 
+            <userControls:SearchBarUserControl
+                Visibility="{Binding SearchBarVisibilityMode}"
                 Margin="10, 10"/>
 
         </StackPanel>

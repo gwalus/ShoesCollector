@@ -10,13 +10,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows;
+using Prism.Ioc;
+using DesktopUI.Interfaces;
 
 namespace DesktopUI.ViewModels
 {
     public class ProductsViewViewModel : BindableBase
     {        
-        private readonly IDialogCoordinator _dialogCoordinator;        
-
+        private readonly IDialogCoordinator _dialogCoordinator;       
         private bool _addProductPanelVisible;
 
         public bool AddProductPanelVisible
@@ -50,6 +52,20 @@ namespace DesktopUI.ViewModels
             //set { _updateProductPanelVisible = value; OnPropertyChanged(nameof(UpdateProductPanelVisible)); }
         }
 
+        
+        private Visibility _searchBarVisibilityMode = Visibility.Collapsed;
+
+        public Visibility SearchBarVisibilityMode
+        {
+            get { return _searchBarVisibilityMode; }
+            set { SetProperty(ref _searchBarVisibilityMode, value); }
+        }
+
+
+        //public Visibility IsSearchBarVisible { get; set; } = Visibility.Collapsed;
+
+        public ShowSearchBarCommand ShowSearchBarCommand { get; set; }
+
 
         #region Properties
         //private Product _selectedProduct;
@@ -64,6 +80,13 @@ namespace DesktopUI.ViewModels
         //    }
         //}
 
+        private ProductSearchFilterViewModel _productSearchFilterViewModel = ContainerLocator.Container.Resolve<ProductSearchFilterViewModel>();
+        public ProductSearchFilterViewModel ProductSearchFilterViewModel
+        {
+            get { return _productSearchFilterViewModel; }
+            set { SetProperty(ref _productSearchFilterViewModel, value); }
+        }
+
         private ObservableCollection<Product> _products;
 
         public ObservableCollection<Product> Products
@@ -72,21 +95,7 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _products, value); }
         }
 
-
-        private string _textBoxSearch;
         private readonly IBaseRestClient _restClient;
-
-        public string TextBoxSearch
-        {
-            get { return _textBoxSearch; }
-            set
-            {
-                _textBoxSearch = value;
-                //OnPropertyChanged(nameof(TextBoxSearch));
-                //Task.Run(() => GetSearchedProducts(_textBoxSearch)).Wait();
-                //GetSearchedProducts(_textBoxSearch);
-            }
-        }
 
         #endregion
 
@@ -96,7 +105,7 @@ namespace DesktopUI.ViewModels
         //public ShowUpdatingProductPanelCommand ShowUpdatingProductPanelCommand { get; set; }
         //public ShowNewProductPanelCommand ShowNewProductPanelCommand { get; set; }
         //public SelectedCellsChanged SelectedCellsChanged { get; set; }
-        public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }
+        public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }        
         #endregion
 
         //public TestCommand Test { get; set; }
@@ -127,11 +136,10 @@ namespace DesktopUI.ViewModels
         //    }
         //}
         #endregion
-        
+
         public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator)
         {
             _dialogCoordinator = dialogCoordinator;
-
             GetProductsCommand = new GetProductsCommand(this);
             
             //ShowNewProductPanelCommand = new ShowNewProductPanelCommand(this);
@@ -140,7 +148,9 @@ namespace DesktopUI.ViewModels
             SearchProductInGoogleCommand = new SearchProductInGoogleCommand(this);
             //AddProductViewModel = new AddProductViewModel(this, dataRepository, dialogCoordinator);
 
-            //Test = new TestCommand(this);
+            ShowSearchBarCommand = new ShowSearchBarCommand(this);
+
+            //Test = new TestCommand(this);            
 
             _restClient = restClient;
         }
@@ -149,6 +159,7 @@ namespace DesktopUI.ViewModels
         {
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Loading products...");
             controller.SetIndeterminate();
+
 
             var restClientSettings = new RestClientSettings
             {
