@@ -3,6 +3,8 @@ using Domain.Helpers.Enums;
 using Domain.Helpers.Filters;
 using System;
 using System.Windows.Input;
+using Prism.Ioc;
+using DesktopUI.Interfaces;
 
 namespace DesktopUI.Commands
 {
@@ -24,12 +26,25 @@ namespace DesktopUI.Commands
         {
             var filter = new ProductFilter();
 
-            if (parameter?.ToString() == nameof(ProductFilterEnum.Available))
-                filter.Condition = nameof(ProductFilterEnum.Available);
+            var totalService = ContainerLocator.Container.Resolve<ITotalService>();
 
-            if (parameter?.ToString() == nameof(ProductFilterEnum.Sold))
-                filter.Condition = nameof(ProductFilterEnum.Sold);
+            switch (parameter)
+            {
+                case nameof(ProductFilterEnum.Available):
+                    filter.Condition = nameof(ProductFilterEnum.Available);
+                    totalService.SetProductTotalsView(false, filter.Condition);
+                    break;
 
+                case nameof(ProductFilterEnum.Sold):
+                    filter.Condition = nameof(ProductFilterEnum.Sold);
+                    totalService.SetProductTotalsView(true, filter.Condition);
+                    break;
+
+                default:
+                    filter.Condition = nameof(ProductFilterEnum.All);
+                    totalService.SetProductTotalsView(null, filter.Condition);
+                    break;
+            }
             _viewModel.GetProducts(filter);
         }
 
