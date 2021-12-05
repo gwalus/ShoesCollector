@@ -1,19 +1,26 @@
-﻿using Domain.Interfaces.Clients;
-using MahApps.Metro.Controls.Dialogs;
+﻿using Prism.Ioc;
 using Prism.Mvvm;
 
 namespace DesktopUI.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "Prism Application";
-        private readonly IBaseRestClient _restClient;
-        private readonly IDialogCoordinator _dialogCoordinator;
+        private string _title = "Shoes Collector";
 
         public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
+        }
+
+        private ProductTotalViewModel _productTotals = ContainerLocator.Container.Resolve<ProductTotalViewModel>();
+        public ProductTotalViewModel ProductTotals
+        {
+            get
+            {                
+                return _productTotals;
+            }
+            set { SetProperty(ref _productTotals, value); }
         }
 
         private ProductsViewViewModel _productsViewViewModel;

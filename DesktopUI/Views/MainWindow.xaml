@@ -6,6 +6,7 @@
         xmlns:converters="clr-namespace:DesktopUI.Converters"
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:views="clr-namespace:DesktopUI.Views"
+        xmlns:userControls="clr-namespace:DesktopUI.UserControls"
         Title="{Binding Title}" MinHeight="620" MinWidth="800" WindowStartupLocation="CenterScreen">
     <!--<Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
@@ -40,7 +41,7 @@
             BorderThickness="1" 
             BorderBrush="White" 
             Margin="2">
-            <!--<views:TotalsUserControl DataContext="{Binding ProductsViewModel.TotalsViewModel}"/>-->
+            <userControls:TotalsUserControl DataContext="{Binding ProductTotals}"/>
         </Border>
     </Grid>
 </mah:MetroWindow>
