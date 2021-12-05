@@ -60,7 +60,7 @@ namespace DesktopUI.Services
             productTotalsModel.WithoutShipTotal = Task.Run(async () => await GetTotalWithoutShip(isSold)).Result;
             productTotalsModel.ProfitTotal = Task.Run(async () => await GetTotalProfit(isSold)).Result;
 
-            productTotalsModel.Description = description;
+            productTotalsModel.Description = $"Totals: ({description.ToLower()})";
         }
 
         private RestClientSettings GetRestClientProductTotalsSettings(ProductTotalType type, bool? isSold)

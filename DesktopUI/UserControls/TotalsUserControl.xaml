@@ -18,7 +18,7 @@
                 <Setter Property="Margin" Value="0 0 15 0"/>
             </Style>
         </StackPanel.Resources>
-        <TextBlock Text="{Binding Description, StringFormat='Totals{0}:'}" FontWeight="Bold" FontStyle="Italic" FontSize="16" Margin="5 0 10 0"/>
+        <TextBlock Text="{Binding Description, StringFormat='{}{0}'}" FontWeight="Bold" FontStyle="Italic" FontSize="16" Margin="5 0 10 0"/>
         <TextBlock Text="{Binding QuantityTotal, StringFormat='Quantity: {0}'}"/>
         <TextBlock Text="{Binding PurchaseTotal, Converter={StaticResource StringToCurrencyConverter}, StringFormat='Purchase: {0}'}"/>
         <TextBlock Text="{Binding SellTotal, Converter={StaticResource StringToCurrencyConverter}, StringFormat='Sell: {0}'}"/>

@@ -4,7 +4,7 @@ namespace DesktopUI.ViewModels
 {
     public class ProductTotalViewModel : BindableBase
     {
-        private string _description;
+        private string _description = "Totals:";
         public string Description
         {
             get { return _description; }
