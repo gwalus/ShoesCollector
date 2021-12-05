@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,9 +18,16 @@ namespace DatabaseCore.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<double> GetTotalsByFilterAsync(Expression<Func<Product, double>> func)
+        public async Task<double> GetTotalsByFilterAsync(Expression<Func<Product, double>> func, bool? isSold)
         {
-            return await _dbContext.Products.SumAsync(func);
+            var query = _dbContext.Products.AsQueryable();
+
+            if (isSold != null && isSold.Value)
+                query = query.Where(x => x.IsSold);
+            if (isSold != null && isSold.Value == false)
+                query = query.Where(x => !x.IsSold);
+
+            return await query.SumAsync(func);
         }
     }
 }
