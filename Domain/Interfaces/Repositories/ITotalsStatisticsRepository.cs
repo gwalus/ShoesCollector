@@ -7,6 +7,6 @@ namespace Domain.Interfaces.Repositories
 {
     public interface ITotalsStatisticsRepository
     {
-        Task<double> GetTotalsByFilterAsync(Expression<Func<Product, double>> func);
+        Task<double> GetTotalsByFilterAsync(Expression<Func<Product, double>> func, bool? isSold);
     }
 }
