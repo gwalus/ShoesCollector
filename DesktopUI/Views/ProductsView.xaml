@@ -12,6 +12,7 @@
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:DesktopUI.Views"
              xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:userControls="clr-namespace:DesktopUI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -69,11 +70,17 @@
             </MenuItem>-->
             </Menu>
 
-            <TextBox metroControls:TextBoxHelper.Watermark="Search by name..."
+            <!--<TextBox metroControls:TextBoxHelper.Watermark="Search by name..."
                      metroControls:TextBoxHelper.ClearTextButton="True"
                      Text="{Binding TextBoxSearch, UpdateSourceTrigger=PropertyChanged}"
                                    Visibility="{Binding Products, Converter={StaticResource NullToVisibilityConverter}}"
-                                   Margin="10, 10"/>
+                                   Margin="10, 10"/>-->
+
+            <userControls:SearchBarUserControl 
+                Width="auto" 
+                Visibility="{Binding Products, Converter={StaticResource NullToVisibilityConverter}}" 
+                Margin="10, 10"/>
+
         </StackPanel>
         <!--#endregion-->
 
