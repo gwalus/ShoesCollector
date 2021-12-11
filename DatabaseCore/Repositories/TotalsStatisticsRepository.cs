@@ -18,6 +18,21 @@ namespace DatabaseCore.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<int> CountProducts(bool? isSold)
+        {
+            var query = _dbContext.Products.AsQueryable();
+
+            if (isSold.HasValue)
+            {
+                return isSold switch
+                {
+                    true => await query.Where(x => x.IsSold).CountAsync(),
+                    _ => await query.Where(x => !x.IsSold).CountAsync(),
+                };
+            }
+            return await query.CountAsync();
+        }
+
         public async Task<double> GetTotalsByFilterAsync(Expression<Func<Product, double>> func, bool? isSold)
         {
             var query = _dbContext.Products.AsQueryable();
