@@ -19,10 +19,18 @@ namespace DesktopUI.Services
             _restClient = restClient;
         }
 
-        public int GetTotalCount(bool? isSold = null)
+        public async Task<int> GetTotalCount(bool? isSold = null)
         {
-            // TODO
-            return 1100;
+            var restClientSettings = new RestClientSettings { Endpoint = ApiUrl.ProductsQuantity};
+
+            if (isSold.HasValue)
+            {
+                var queryStringParameters = new Dictionary<string, string>();
+                queryStringParameters.Add("isSold", isSold.ToString());
+
+                restClientSettings.QueryStringParameters = queryStringParameters;
+            }
+            return await _restClient.CallAsync<int>(restClientSettings);
         }
 
         public async Task<double> GetTotalPurchase(bool? isSold = null)
@@ -53,7 +61,7 @@ namespace DesktopUI.Services
         {
             var productTotalsModel = ContainerLocator.Container.Resolve<ProductTotalViewModel>();
 
-            productTotalsModel.QuantityTotal = GetTotalCount();
+            productTotalsModel.QuantityTotal = Task.Run(async () => await GetTotalCount(isSold)).Result;
             productTotalsModel.PurchaseTotal = Task.Run(async () => await GetTotalPurchase(isSold)).Result;
             productTotalsModel.SellTotal = Task.Run(async () => await GetTotalSell(isSold)).Result;
             productTotalsModel.ShipTotal = Task.Run(async () => await GetTotalShip(isSold)).Result;
