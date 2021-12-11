@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class TotalsController : ControllerBase
     {
@@ -19,8 +18,7 @@ namespace WebAPI.Controllers
             _totalsStatisticsRepository = totalsStatisticsRepository;
         }
 
-        //[HttpGet(ApiUrl.Totals)]
-        [HttpGet]
+        [HttpGet(ApiUrl.Totals)]
         public async Task<ActionResult<decimal>> GetTotals([FromQuery] string type, [FromQuery]bool? isSold)
         {
             Expression<Func<Product, double>> function = type switch
@@ -37,6 +35,12 @@ namespace WebAPI.Controllers
                 return BadRequest("Please pass correct condition and try again.");
 
             return Ok(await _totalsStatisticsRepository.GetTotalsByFilterAsync(function, isSold));
+        }
+
+        [HttpGet(ApiUrl.ProductsQuantity)]
+        public async Task<ActionResult<int>> GetCount([FromQuery] bool? isSold)
+        {
+            return Ok(await _totalsStatisticsRepository.CountProducts(isSold));
         }
     }
 }
