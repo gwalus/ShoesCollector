@@ -16,9 +16,9 @@ namespace DesktopUI.Services
             _restClient = restClient;
         }
 
-        public Task<List<ProductGroupData>> GetProductLossGroupData()
+        public async Task<List<ProductGroupData>> GetProductLossGroupData()
         {
-            throw new System.NotImplementedException();
+            return await _restClient.CallAsync<List<ProductGroupData>>(new Domain.Helpers.Settings.RestClientSettings { Endpoint = ApiUrl.LossGroupProductData });
         }
 
         public async Task<List<ProductGroupData>> GetProductPurchaseGroupData()
