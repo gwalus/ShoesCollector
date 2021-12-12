@@ -24,6 +24,7 @@
 
         public const string SoldGroupProductData = Statistics + "/group-sold";
         public const string PurchaseGroupProductData = Statistics + "/group-purchase";
+        public const string LossGroupProductData = Statistics + "/group-loss";
 
         public const string ProductsQuantity = Totals + "/count";
     }
