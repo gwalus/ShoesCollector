@@ -9,5 +9,6 @@ namespace DesktopUI.Interfaces
         Task<Product> GetLatestPurchase();
         Task<Product> GetLatestSale();
         Task<int> GetDaysOfFirstPurchase();
+        Task<int> GetDaysOfLatestPurchase();
     }
 }
