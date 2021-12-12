@@ -60,5 +60,10 @@ namespace DesktopUI.Services
         {
             return await _restClient.CallAsync<double>(new RestClientSettings { Endpoint = ApiUrl.LowestProfit });
         }
+
+        public async Task<double> GetLowestPurchase()
+        {
+            return await _restClient.CallAsync<double>(new RestClientSettings { Endpoint = ApiUrl.LowestPurchase });
+        }
     }
 }

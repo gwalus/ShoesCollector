@@ -118,17 +118,12 @@ namespace DesktopUI.ViewModels
             set { SetProperty (ref _biggestPurchase, value); }
         }
 
-        //private double _lowestPurchase;
-
-        //public double LowestPurchase
-        //{
-        //    get { return _lowestPurchase; }
-        //    set
-        //    {
-        //        _lowestPurchase = value;
-        //        OnPropertyChanged(nameof(LowestPurchase));
-        //    }
-        //}
+        private double _lowestPurchase;
+        public double LowestPurchase
+        {
+            get { return _lowestPurchase; }
+            set { SetProperty (ref _lowestPurchase, value);}
+        }
 
         //#region Commands
         //public RefreshStatisticsCommand RefreshStatisticsCommand { get; set; }
@@ -225,9 +220,7 @@ namespace DesktopUI.ViewModels
             BestProfit = await _statisticsService.GetBestProfit();
             LowestProfit = await _statisticsService.GetLowestProfit();
             BiggestPurchase = await _statisticsService.GetBiggestPurchase();
-
-
-            //LowestPurchase = await _statisticsService.GetLowestPurchase();
+            LowestPurchase = await _statisticsService.GetLowestPurchase();
         }
 
         public void RefreshContent()
