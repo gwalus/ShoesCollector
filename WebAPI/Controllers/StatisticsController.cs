@@ -1,7 +1,9 @@
-﻿using Domain.Entities;
+﻿using Domain.Dtos;
+using Domain.Entities;
 using Domain.Helpers.Urls;
 using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -12,12 +14,15 @@ namespace WebAPI.Controllers
         private readonly IProductStatisticsRepository _productStatisticsRepository;
         private readonly IProductDatesStatisticsRepository _productDatesStatisticsRepository;
         private readonly IProductPricesStatisticsRepository _productPricesStatisticsRepository;
+        private readonly IProductGroupDataRepository _productGroupDataRepository;
 
-        public StatisticsController(IProductStatisticsRepository productStatisticsRepository, IProductDatesStatisticsRepository productDatesStatisticsRepository, IProductPricesStatisticsRepository productPricesStatisticsRepository)
+        public StatisticsController(IProductStatisticsRepository productStatisticsRepository, IProductDatesStatisticsRepository productDatesStatisticsRepository, 
+            IProductPricesStatisticsRepository productPricesStatisticsRepository, IProductGroupDataRepository productGroupDataRepository)
         {
             _productStatisticsRepository = productStatisticsRepository;
             _productDatesStatisticsRepository = productDatesStatisticsRepository;
             _productPricesStatisticsRepository = productPricesStatisticsRepository;
+            _productGroupDataRepository = productGroupDataRepository;
         }
 
         [HttpGet(ApiUrl.FirstPurchase)]
@@ -78,6 +83,12 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<Product>> GetLowestPurchase()
         {
             return Ok(await _productPricesStatisticsRepository.GetLowestPurchaseAsync());
+        }
+
+        [HttpGet(ApiUrl.SoldGroupProductData)]
+        public async Task<ActionResult<List<ProductGroupData>>> GetSoldProductGroupData()
+        {
+            return Ok(await _productGroupDataRepository.GetSoldProductGroupData());
         }
     }
 }
