@@ -25,17 +25,12 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _groupedPurchaseProducts, value); }
         }
 
-        //private IList<GroupingData> _groupedLossProducts;
-
-        //public IList<GroupingData> GroupedLossProducts
-        //{
-        //    get { return _groupedLossProducts; }
-        //    set
-        //    {
-        //        _groupedLossProducts = value;
-        //        OnPropertyChanged(nameof(GroupedLossProducts));
-        //    }
-        //}
+        private IList<ProductGroupData> _groupedLossProducts;
+        public IList<ProductGroupData> GroupedLossProducts
+        {
+            get { return _groupedLossProducts; }
+            set { SetProperty(ref _groupedLossProducts, value); }
+        }
 
         private Product _firstPurchase;
 
@@ -111,21 +106,10 @@ namespace DesktopUI.ViewModels
             set { SetProperty (ref _lowestPurchase, value);}
         }
 
-        //#region Commands
-        //public RefreshStatisticsCommand RefreshStatisticsCommand { get; set; }
-        //#endregion
-
         public StatisticsViewViewModel(IStatisticsService statisticsService, IProductGroupDataService productGroupDataService)
         {
             _statisticsService = statisticsService;
             _productGroupDataService = productGroupDataService;
-            //_dataRepository = dataRepository;
-            //_statisticsService = statisticsService;
-            //RefreshStatisticsCommand = new RefreshStatisticsCommand(this);
-
-            //GroupedSoldProducts = new List<GroupingData>();
-            //GroupedPurchaseProducts = new List<GroupingData>();
-            //GroupedLossProducts = new List<GroupingData>();
 
             SetStatistisc();
             SetGroupedProductStatistics();
@@ -135,26 +119,7 @@ namespace DesktopUI.ViewModels
         {
             GroupedSoldProducts = await _productGroupDataService.GetProductSoldGroupData();
             GroupedPurchaseProducts = await _productGroupDataService.GetProductPurchaseGroupData();
-
-            //var groupedSoldLossProducts = products
-            //    .Where(x => x.IsSold && x.Profit < 0)
-            //    .OrderByDescending(x => DateTime.Parse(x.SaleDate))
-            //    .GroupBy(x => new { DateTime.Parse(x.SaleDate).Year, DateTime.Parse(x.SaleDate).Month })
-            //    .ToList();
-
-            //foreach (var item in groupedSoldLossProducts)
-            //{
-            //    var groupedData = new GroupingData()
-            //    {
-            //        Year = item.Key.Year,
-            //        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Key.Month),
-            //        Count = item.Count(),
-            //        Purchase = Math.Round(item.Sum(x => x.Profit.Value), 2),
-            //        Average = Math.Round((item.Sum(x => x.Profit.Value) / item.Count()), 2)
-            //    };
-
-            //    GroupedLossProducts.Add(groupedData);
-            //}
+            GroupedLossProducts = await _productGroupDataService.GetProductLossGroupData();
         }
 
         private async void SetStatistisc()
