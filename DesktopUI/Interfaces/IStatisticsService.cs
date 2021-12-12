@@ -13,5 +13,6 @@ namespace DesktopUI.Interfaces
         Task<int> GetDaysOfLatestSale();
         Task<double> GetBestProfit();
         Task<double> GetLowestProfit();
+        Task<double> GetBiggestPurchase();
     }
 }

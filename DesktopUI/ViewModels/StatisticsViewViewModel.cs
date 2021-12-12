@@ -111,18 +111,12 @@ namespace DesktopUI.ViewModels
             set { SetProperty (ref _lowestProfit, value); }
         }
 
-
-        //private double _biggestPurchase;
-
-        //public double BiggestPurchase
-        //{
-        //    get { return _biggestPurchase; }
-        //    set
-        //    {
-        //        _biggestPurchase = value;
-        //        OnPropertyChanged(nameof(BiggestPurchase));
-        //    }
-        //}
+        private double _biggestPurchase;
+        public double BiggestPurchase
+        {
+            get { return _biggestPurchase; }
+            set { SetProperty (ref _biggestPurchase, value); }
+        }
 
         //private double _lowestPurchase;
 
@@ -230,8 +224,8 @@ namespace DesktopUI.ViewModels
             DaysOfLatestSale = await _statisticsService.GetDaysOfLatestSale();
             BestProfit = await _statisticsService.GetBestProfit();
             LowestProfit = await _statisticsService.GetLowestProfit();
+            BiggestPurchase = await _statisticsService.GetBiggestPurchase();
 
-            //BiggestPurchase = await _statisticsService.GetBiggestPurchase();
 
             //LowestPurchase = await _statisticsService.GetLowestPurchase();
         }
