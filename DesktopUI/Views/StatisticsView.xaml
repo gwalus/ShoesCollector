@@ -86,7 +86,7 @@
                 <userControls:StatisticsUserControl DataContext="{Binding FirstPurchase}"/>
 
                 <TextBlock Text="Latest purchase" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0"/>
-                <!--<userControls:StatisticsUserControl DataContext="{Binding LatestPurchase}"/>-->
+                <userControls:StatisticsUserControl DataContext="{Binding LatestPurchase}"/>
 
                 <TextBlock Text="Latest sale" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0"/>
                 <!--<userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>-->

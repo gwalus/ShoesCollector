@@ -3,7 +3,6 @@ using Domain.Entities;
 using Domain.Helpers.Settings;
 using Domain.Helpers.Urls;
 using Domain.Interfaces.Clients;
-using System;
 using System.Threading.Tasks;
 
 namespace DesktopUI.Services
@@ -20,6 +19,11 @@ namespace DesktopUI.Services
         public async Task<Product> GetFirstPurchase()
         {
             return await _restClient.CallAsync<Product>(new RestClientSettings { Endpoint = ApiUrl.FirstPurchase});
+        }
+
+        public async Task<Product> GetLatestPurchase()
+        {
+            return await _restClient.CallAsync<Product>(new RestClientSettings { Endpoint = ApiUrl.LatestPurchase });
         }
     }
 }

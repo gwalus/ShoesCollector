@@ -247,8 +247,7 @@ namespace DesktopUI.ViewModels
         private async void SetStatistisc()
         {
             FirstPurchase = await _statisticsService.GetFirstPurchase();
-
-            //LatestPurchase = await _statisticsService.GetLatestPurchase();
+            LatestPurchase = await _statisticsService.GetLatestPurchase();
 
             //LatestSale = await _statisticsService.GetLatestSale();
 
