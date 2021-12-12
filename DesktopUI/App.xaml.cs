@@ -35,6 +35,7 @@ namespace DesktopUI
             containerRegistry.RegisterScoped<ITotalService, TotalService>();
             containerRegistry.RegisterScoped<IProductService, ProductService>();
             containerRegistry.RegisterScoped<IStatisticsService, StatisticsService>();
+            containerRegistry.RegisterScoped<IProductGroupDataService, ProductGroupDataService>();
 
             containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
         }
