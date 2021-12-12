@@ -248,8 +248,7 @@ namespace DesktopUI.ViewModels
         {
             FirstPurchase = await _statisticsService.GetFirstPurchase();
             LatestPurchase = await _statisticsService.GetLatestPurchase();
-
-            //LatestSale = await _statisticsService.GetLatestSale();
+            LatestSale = await _statisticsService.GetLatestSale();
 
             //DaysOfFirstPurchase = await _statisticsService.GetDaysOfFirstPurchase();
 

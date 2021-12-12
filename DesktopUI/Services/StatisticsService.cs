@@ -25,5 +25,10 @@ namespace DesktopUI.Services
         {
             return await _restClient.CallAsync<Product>(new RestClientSettings { Endpoint = ApiUrl.LatestPurchase });
         }
+
+        public async Task<Product> GetLatestSale()
+        {
+            return await _restClient.CallAsync<Product>(new RestClientSettings { Endpoint = ApiUrl.LatestSale });
+        }
     }
 }

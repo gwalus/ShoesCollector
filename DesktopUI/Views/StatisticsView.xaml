@@ -89,7 +89,7 @@
                 <userControls:StatisticsUserControl DataContext="{Binding LatestPurchase}"/>
 
                 <TextBlock Text="Latest sale" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0"/>
-                <!--<userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>-->
+                <userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>
             </StackPanel>
         </ScrollViewer>
 
