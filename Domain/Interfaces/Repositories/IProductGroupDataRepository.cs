@@ -1,12 +1,13 @@
 ﻿using Domain.Dtos;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Domain.Interfaces.Repositories
 {
     public interface IProductGroupDataRepository
     {
-        Task<ProductGroupData> GetSoldProductGroupData();
-        Task<ProductGroupData> GetPurhcaseProductGroupData();
-        Task<ProductGroupData> GetLossProductGroupData();
+        Task<List<ProductGroupData>> GetSoldProductGroupData();
+        Task<List<ProductGroupData>> GetPurchaseProductGroupData();
+        Task<List<ProductGroupData>> GetLossProductGroupData();
     }
 }
