@@ -12,25 +12,18 @@ namespace DesktopUI.ViewModels
         private readonly IProductGroupDataService _productGroupDataService;
 
         private IList<ProductGroupData> _groupedSoldProducts;
-
         public IList<ProductGroupData> GroupedSoldProducts
         {
             get { return _groupedSoldProducts; }
             set { SetProperty(ref _groupedSoldProducts, value);}
         }
 
-        //private IList<GroupingData> groupedPurchaseProducts;
-
-        //public IList<GroupingData> GroupedPurchaseProducts
-        //{
-        //    get { return groupedPurchaseProducts; }
-        //    set
-        //    {
-        //        groupedPurchaseProducts = value;
-        //        OnPropertyChanged(nameof(GroupedPurchaseProducts));
-
-        //    }
-        //}
+        private IList<ProductGroupData> _groupedPurchaseProducts;
+        public IList<ProductGroupData> GroupedPurchaseProducts
+        {
+            get { return _groupedPurchaseProducts; }
+            set { SetProperty(ref _groupedPurchaseProducts, value); }
+        }
 
         //private IList<GroupingData> _groupedLossProducts;
 
@@ -141,25 +134,7 @@ namespace DesktopUI.ViewModels
         private async void SetGroupedProductStatistics()
         {
             GroupedSoldProducts = await _productGroupDataService.GetProductSoldGroupData();
-
-            //var groupedPurchaseProducts = products
-            //    .OrderByDescending(product => DateTime.Parse(product.DateOfPurchase))
-            //    .GroupBy(product => new { DateTime.Parse(product.DateOfPurchase).Year, DateTime.Parse(product.DateOfPurchase).Month })
-            //    .ToList();
-
-            //foreach (var item in groupedPurchaseProducts)
-            //{
-            //    var groupedData = new GroupingData()
-            //    {
-            //        Year = item.Key.Year,
-            //        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Key.Month),
-            //        Count = item.Count(),
-            //        Purchase = Math.Round(item.Sum(x => x.PurchasePrice), 2),
-            //        Average = Math.Round((item.Sum(x => x.PurchasePrice) / item.Count()), 2)
-            //    };
-
-            //    GroupedPurchaseProducts.Add(groupedData);
-            //}
+            GroupedPurchaseProducts = await _productGroupDataService.GetProductPurchaseGroupData();
 
             //var groupedSoldLossProducts = products
             //    .Where(x => x.IsSold && x.Profit < 0)
