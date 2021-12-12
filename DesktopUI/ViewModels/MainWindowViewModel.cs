@@ -31,6 +31,14 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _productsViewViewModel, value); }
         }
 
+        private StatisticsViewViewModel _statisticsViewViewModel = ContainerLocator.Container.Resolve<StatisticsViewViewModel>();
+
+        public StatisticsViewViewModel StatisticsViewViewModel
+        {
+            get { return _statisticsViewViewModel; }
+            set { SetProperty(ref _statisticsViewViewModel, value); }
+        }
+
         public MainWindowViewModel(ProductsViewViewModel productsViewViewModel)
         {
             ProductsViewViewModel = productsViewViewModel;

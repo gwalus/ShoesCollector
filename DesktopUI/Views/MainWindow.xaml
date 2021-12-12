@@ -28,7 +28,7 @@
             </TabItem>
 
             <TabItem Header="Statistics">
-                <!--<views:StatisticsPage DataContext="{Binding StatisticsViewModel}"/>-->
+                <views:StatisticsView DataContext="{Binding StatisticsViewViewModel}"/>
             </TabItem>
 
             <TabItem Header="Charts">
