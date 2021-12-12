@@ -26,7 +26,30 @@ namespace DatabaseCore.Repositories
 
         public async Task<List<ProductGroupData>> GetPurchaseProductGroupData()
         {
-            throw new NotImplementedException();
+            var products = await _dbContext.Products.ToListAsync();
+
+            var groupedPurchaseProducts = products
+                .OrderByDescending(product => DateTime.Parse(product.DateOfPurchase))
+                .GroupBy(product => new { DateTime.Parse(product.DateOfPurchase).Year, DateTime.Parse(product.DateOfPurchase).Month })
+                .ToList();
+
+            var productGroupDatas = new List<ProductGroupData>();
+
+            foreach (var item in groupedPurchaseProducts)
+            {
+                var groupedData = new ProductGroupData()
+                {
+                    Year = item.Key.Year,
+                    Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Key.Month),
+                    Count = item.Count(),
+                    Purchase = Math.Round(item.Sum(x => x.PurchasePrice), 2),
+                    Average = Math.Round((item.Sum(x => x.PurchasePrice) / item.Count()), 2)
+                };
+
+                productGroupDatas.Add(groupedData);
+            }
+
+            return productGroupDatas;
         }
 
         public async Task<List<ProductGroupData>> GetSoldProductGroupData()
