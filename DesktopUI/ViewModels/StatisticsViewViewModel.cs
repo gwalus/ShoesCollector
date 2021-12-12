@@ -1,30 +1,23 @@
 ﻿using DesktopUI.Interfaces;
+using Domain.Dtos;
 using Domain.Entities;
 using Prism.Mvvm;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace DesktopUI.ViewModels
 {
     public class StatisticsViewViewModel : BindableBase
     {
         private readonly IStatisticsService _statisticsService;
+        private readonly IProductGroupDataService _productGroupDataService;
 
-        //#region Fields
-        //private readonly IDataRepository _dataRepository;
-        //private readonly IStatisticsService _statisticsService;
-        //#endregion
+        private IList<ProductGroupData> _groupedSoldProducts;
 
-        //private IList<GroupingData> groupedSoldProducts;
-
-        //public IList<GroupingData> GroupedSoldProducts
-        //{
-        //    get { return groupedSoldProducts; }
-        //    set
-        //    {
-        //        groupedSoldProducts = value;
-        //        OnPropertyChanged(nameof(GroupedSoldProducts));
-        //    }
-        //}
+        public IList<ProductGroupData> GroupedSoldProducts
+        {
+            get { return _groupedSoldProducts; }
+            set { SetProperty(ref _groupedSoldProducts, value);}
+        }
 
         //private IList<GroupingData> groupedPurchaseProducts;
 
@@ -129,9 +122,10 @@ namespace DesktopUI.ViewModels
         //public RefreshStatisticsCommand RefreshStatisticsCommand { get; set; }
         //#endregion
 
-        public StatisticsViewViewModel(IStatisticsService statisticsService)
+        public StatisticsViewViewModel(IStatisticsService statisticsService, IProductGroupDataService productGroupDataService)
         {
             _statisticsService = statisticsService;
+            _productGroupDataService = productGroupDataService;
             //_dataRepository = dataRepository;
             //_statisticsService = statisticsService;
             //RefreshStatisticsCommand = new RefreshStatisticsCommand(this);
@@ -140,34 +134,13 @@ namespace DesktopUI.ViewModels
             //GroupedPurchaseProducts = new List<GroupingData>();
             //GroupedLossProducts = new List<GroupingData>();
 
-            //GetGroupingProducts();
             SetStatistisc();
-            //Task.Run(() => SetStatistisc());
+            SetGroupedProductStatistics();
         }
 
-        private async void GetGroupingProducts()
+        private async void SetGroupedProductStatistics()
         {
-            //var products = await _dataRepository.GetProducts();
-
-            //var groupedSoldProducts = products
-            //    .Where(x => x.IsSold)
-            //    .OrderByDescending(x => DateTime.Parse(x.SaleDate))
-            //    .GroupBy(x => new { DateTime.Parse(x.SaleDate).Year, DateTime.Parse(x.SaleDate).Month })
-            //    .ToList();
-
-            //foreach (var item in groupedSoldProducts)
-            //{
-            //    var groupedData = new GroupingData()
-            //    {
-            //        Year = item.Key.Year,
-            //        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Key.Month),
-            //        Count = item.Count(),
-            //        Profit = Math.Round(item.Sum(x => x.Profit.Value), 2),
-            //        Average = Math.Round((item.Sum(x => x.Profit.Value) / item.Count()), 2)
-            //    };
-
-            //    GroupedSoldProducts.Add(groupedData);
-            //}
+            GroupedSoldProducts = await _productGroupDataService.GetProductSoldGroupData();
 
             //var groupedPurchaseProducts = products
             //    .OrderByDescending(product => DateTime.Parse(product.DateOfPurchase))
@@ -225,18 +198,8 @@ namespace DesktopUI.ViewModels
 
         public void RefreshContent()
         {
-            GetGroupingProducts();
+            SetGroupedProductStatistics();
             SetStatistisc();
         }
-    }
-
-    public class GroupingData
-    {
-        public int Year { get; set; }
-        public string Month { get; set; }
-        public int Count { get; set; }
-        public double Purchase { get; set; }
-        public double Profit { get; set; }
-        public double Average { get; set; }
     }
 }
