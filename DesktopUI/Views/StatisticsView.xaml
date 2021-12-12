@@ -28,9 +28,8 @@
 
             <MenuItem Header="Refresh" Command="{Binding RefreshStatisticsCommand}"/>
         </Menu>
-        
-        <Expander Header="Sold" Grid.Row="1" Margin="10" IsExpanded="True">
 
+        <Expander Header="Sold" Grid.Row="1" Margin="10" IsExpanded="True">
             <DataGrid ItemsSource="{Binding GroupedSoldProducts}" 
                   IsReadOnly="True" 
                   CanUserAddRows="False"
@@ -85,28 +84,29 @@
                     <Style x:Key="Header" TargetType="TextBlock">
                         <Setter Property="Margin" Value="10 ,0"/>
                         <Setter Property="FontSize" Value="24"/>
-                        <Setter Property="FontWeight" Value="ExtraLight"/>
+                        <Setter Property="FontWeight" Value="Light"/>
+                        <Setter Property="FontStyle" Value="Italic"/>
                         <Setter Property="HorizontalAlignment" Value="Right"/>
                     </Style>
                     <Style x:Key="Item" TargetType="TextBlock">
                         <Setter Property="Margin" Value="10 ,0"/>
-                        <Setter Property="FontSize" Value="22"/>
+                        <Setter Property="FontSize" Value="20"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="HorizontalAlignment" Value="Left"/>
                     </Style>
                 </StackPanel.Resources>
 
-                <TextBlock Style="{StaticResource Header}" Text="First purchase"/>
-                <TextBlock Style="{StaticResource Item}" Text="{Binding FirstPurchase.Name, StringFormat='Product: {0}'}"/>
-                <userControls:StatisticsUserControl DataContext="{Binding FirstPurchase}"/>
+                <TextBlock Style="{StaticResource Header}" Text="Latest sale"/>
+                <TextBlock Style="{StaticResource Item}" Text="{Binding LatestSale.Name, StringFormat='Product: {0}'}"/>
+                <userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>
 
                 <TextBlock Style="{StaticResource Header}" Text="Latest purchase"/>
                 <TextBlock Style="{StaticResource Item}" Text="{Binding LatestPurchase.Name, StringFormat='Product: {0}'}"/>
                 <userControls:StatisticsUserControl DataContext="{Binding LatestPurchase}"/>
 
-                <TextBlock Style="{StaticResource Header}" Text="Latest sale"/>
-                <TextBlock Style="{StaticResource Item}" Text="{Binding LatestSale.Name, StringFormat='Product: {0}'}"/>
-                <userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>
+                <TextBlock Style="{StaticResource Header}" Text="First purchase"/>
+                <TextBlock Style="{StaticResource Item}" Text="{Binding FirstPurchase.Name, StringFormat='Product: {0}'}"/>
+                <userControls:StatisticsUserControl DataContext="{Binding FirstPurchase}"/>
             </StackPanel>
         </ScrollViewer>
 
