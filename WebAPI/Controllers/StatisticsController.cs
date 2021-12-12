@@ -96,5 +96,11 @@ namespace WebAPI.Controllers
         {
             return Ok(await _productGroupDataRepository.GetPurchaseProductGroupData());
         }
+
+        [HttpGet(ApiUrl.LossGroupProductData)]
+        public async Task<ActionResult<List<ProductGroupData>>> GetLossProductGroupData()
+        {
+            return Ok(await _productGroupDataRepository.GetLossProductGroupData());
+        }
     }
 }
