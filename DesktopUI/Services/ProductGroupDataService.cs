@@ -21,9 +21,9 @@ namespace DesktopUI.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<List<ProductGroupData>> GetProductPurchaseGroupData()
+        public async Task<List<ProductGroupData>> GetProductPurchaseGroupData()
         {
-            throw new System.NotImplementedException();
+            return await _restClient.CallAsync<List<ProductGroupData>>(new Domain.Helpers.Settings.RestClientSettings { Endpoint = ApiUrl.PurchaseGroupProductData });
         }
 
         public async Task<List<ProductGroupData>> GetProductSoldGroupData()
