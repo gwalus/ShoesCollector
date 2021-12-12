@@ -80,15 +80,32 @@
         </Expander>
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
-            <StackPanel  Margin="10">
+            <StackPanel Margin="10">
+                <StackPanel.Resources>
+                    <Style x:Key="Header" TargetType="TextBlock">
+                        <Setter Property="Margin" Value="10 ,0"/>
+                        <Setter Property="FontSize" Value="24"/>
+                        <Setter Property="FontWeight" Value="ExtraLight"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                    </Style>
+                    <Style x:Key="Item" TargetType="TextBlock">
+                        <Setter Property="Margin" Value="10 ,0"/>
+                        <Setter Property="FontSize" Value="22"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                    </Style>
+                </StackPanel.Resources>
 
-                <TextBlock Text="First purchase" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0"/>
+                <TextBlock Style="{StaticResource Header}" Text="First purchase"/>
+                <TextBlock Style="{StaticResource Item}" Text="{Binding FirstPurchase.Name, StringFormat='Product: {0}'}"/>
                 <userControls:StatisticsUserControl DataContext="{Binding FirstPurchase}"/>
 
-                <TextBlock Text="Latest purchase" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0"/>
+                <TextBlock Style="{StaticResource Header}" Text="Latest purchase"/>
+                <TextBlock Style="{StaticResource Item}" Text="{Binding LatestPurchase.Name, StringFormat='Product: {0}'}"/>
                 <userControls:StatisticsUserControl DataContext="{Binding LatestPurchase}"/>
 
-                <TextBlock Text="Latest sale" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0"/>
+                <TextBlock Style="{StaticResource Header}" Text="Latest sale"/>
+                <TextBlock Style="{StaticResource Item}" Text="{Binding LatestSale.Name, StringFormat='Product: {0}'}"/>
                 <userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>
             </StackPanel>
         </ScrollViewer>
