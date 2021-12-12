@@ -75,17 +75,12 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _latestSale, value); }
         }
 
-        //private int _daysOfFirstPurchase;
-
-        //public int DaysOfFirstPurchase
-        //{
-        //    get { return _daysOfFirstPurchase; }
-        //    set
-        //    {
-        //        _daysOfFirstPurchase = value;
-        //        OnPropertyChanged(nameof(DaysOfFirstPurchase));
-        //    }
-        //}
+        private int _daysOfFirstPurchase;
+        public int DaysOfFirstPurchase
+        {
+            get { return _daysOfFirstPurchase; }
+            set { SetProperty(ref _daysOfFirstPurchase, value); }
+        }
 
         //private int _daysOfLatestPurchase;
 
@@ -249,8 +244,7 @@ namespace DesktopUI.ViewModels
             FirstPurchase = await _statisticsService.GetFirstPurchase();
             LatestPurchase = await _statisticsService.GetLatestPurchase();
             LatestSale = await _statisticsService.GetLatestSale();
-
-            //DaysOfFirstPurchase = await _statisticsService.GetDaysOfFirstPurchase();
+            DaysOfFirstPurchase = await _statisticsService.GetDaysOfFirstPurchase();
 
             //DaysOfLatestPurchase = await _statisticsService.GetDaysOfLatestPurchase();
 

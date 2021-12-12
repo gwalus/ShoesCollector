@@ -16,6 +16,11 @@ namespace DesktopUI.Services
             _restClient = restClient;
         }
 
+        public async Task<int> GetDaysOfFirstPurchase()
+        {
+            return await _restClient.CallAsync<int>(new RestClientSettings { Endpoint = ApiUrl.DaysOfFirstPurchase });
+        }
+
         public async Task<Product> GetFirstPurchase()
         {
             return await _restClient.CallAsync<Product>(new RestClientSettings { Endpoint = ApiUrl.FirstPurchase});
