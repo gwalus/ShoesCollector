@@ -23,6 +23,7 @@
         public const string LowestPurchase = Statistics + "/lowest-purchase";
 
         public const string SoldGroupProductData = Statistics + "/group-sold";
+        public const string PurchaseGroupProductData = Statistics + "/group-purchase";
 
         public const string ProductsQuantity = Totals + "/count";
     }
