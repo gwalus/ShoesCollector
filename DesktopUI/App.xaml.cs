@@ -1,16 +1,13 @@
 ﻿using DesktopUI.Interfaces;
 using DesktopUI.Services;
-using DesktopUI.UserControls;
 using DesktopUI.ViewModels;
 using DesktopUI.Views;
 using Domain.Interfaces.Clients;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Ioc;
-using Prism.Mvvm;
 using RestSharp;
 using System.Windows;
 using Unity;
-using Unity.Injection;
 
 namespace DesktopUI
 {
@@ -33,9 +30,11 @@ namespace DesktopUI
 
             containerRegistry.RegisterSingleton<ProductTotalViewModel>();
             containerRegistry.RegisterSingleton<ProductsViewViewModel>();
+            containerRegistry.RegisterSingleton<StatisticsViewViewModel>();
 
             containerRegistry.RegisterScoped<ITotalService, TotalService>();
             containerRegistry.RegisterScoped<IProductService, ProductService>();
+            containerRegistry.RegisterScoped<IStatisticsService, StatisticsService>();
 
             containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
         }
