@@ -9,6 +9,7 @@ namespace WebAPI.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<ProductAddDto, Product>();
+            CreateMap<ProductUpdateDto, Product>();
         }
     }
 }
