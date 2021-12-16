@@ -1,6 +1,4 @@
 using DatabaseCore.DataContext;
-using DatabaseCore.Repositories;
-using Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using WebAPI.Extensions;
+using WebAPI.Helpers;
 
 namespace WebAPI
 {
@@ -30,6 +29,7 @@ namespace WebAPI
                         Configuration.GetConnectionString("DefaultConnection"),
                         x => x.MigrationsAssembly("DatabaseCore.Migrations")));
             services.AddApplicationRepositories();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddControllers();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddSwaggerGen(c =>
