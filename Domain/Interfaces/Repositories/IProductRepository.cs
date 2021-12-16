@@ -7,10 +7,10 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetAll(ProductFilter productFilter);
-        Task<Product> GetById();
-        Task<bool> Add(Product product);
-        Task<bool> Update(Product product);
-        Task<bool> ChangeStatus(int id);
+        Task<List<Product>> GetAllAsync(ProductFilter productFilter);
+        Task<Product> GetByIdAsync();
+        Task<bool> AddAsync(Product product);
+        Task<bool> UpdateAsync(Product product);
+        Task<bool> ChangeStatusAsync(int id);
     }
 }
