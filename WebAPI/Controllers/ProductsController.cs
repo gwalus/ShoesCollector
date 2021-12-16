@@ -38,5 +38,16 @@ namespace WebAPI.Controllers
 
             return BadRequest();
         }
+
+        [HttpPut(ApiUrl.Product)]
+        public async Task<ActionResult> UpdateProduct([FromBody] ProductUpdateDto productUpdateDto)
+        {
+            var productToUpdate = _mapper.Map<Product>(productUpdateDto);
+
+            if (await _productRepository.AddAsync(productToUpdate))
+                return Ok("Product has been added");
+
+            return BadRequest();
+        }
     }
 }
