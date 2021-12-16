@@ -74,9 +74,12 @@ namespace DatabaseCore.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateAsync(Product product)
+        public async Task<bool> UpdateAsync(Product product)
         {
-            throw new NotImplementedException();
+            var productToUpdate = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == product.Id);
+
+            productToUpdate = product;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
     }
 }
