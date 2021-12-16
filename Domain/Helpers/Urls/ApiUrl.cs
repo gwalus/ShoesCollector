@@ -9,6 +9,8 @@
         public const string Statistics = API + "statistics";
         public const string Totals = API + "totals";
 
+        public const string Product = API + "product";
+
         public const string FirstPurchase = Statistics + "/first-purchase";
         public const string LatestPurchase = Statistics + "/latest-purchase";
         public const string LatestSale = Statistics + "/latest-sale";
