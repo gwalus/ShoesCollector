@@ -20,17 +20,18 @@ namespace DatabaseCore.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<bool> Add(Product product)
+        public async Task<bool> AddAsync(Product product)
+        {
+            await _dbContext.Products.AddAsync(product);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public Task<bool> ChangeStatusAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> ChangeStatus(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Product>> GetAll(ProductFilter productFilter)
+        public async Task<List<Product>> GetAllAsync(ProductFilter productFilter)
         {
             var query = _dbContext.Products.AsQueryable();
 
@@ -68,12 +69,12 @@ namespace DatabaseCore.Repositories
             return await query.ToListAsync();            
         }
 
-        public Task<Product> GetById()
+        public Task<Product> GetByIdAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(Product product)
+        public Task<bool> UpdateAsync(Product product)
         {
             throw new NotImplementedException();
         }
