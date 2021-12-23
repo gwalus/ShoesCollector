@@ -8,6 +8,7 @@
         public const string Products = API + "products";
         public const string Statistics = API + "statistics";
         public const string Totals = API + "totals";
+        public const string Brands = API + "brands";
 
         public const string Product = API + "product";
 
