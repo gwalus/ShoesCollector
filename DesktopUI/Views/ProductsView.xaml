@@ -57,7 +57,7 @@
 
                 <MenuItem Header="Action">
                     <MenuItem Header="Add"
-                                  Command="{Binding ShowNewProductPanelCommand}">
+                                  Command="{Binding ShowAddProductPanelCommand}">
                         <MenuItem.Icon>
                             <materialDesing:PackIcon Kind="Add" HorizontalAlignment="Center"/>
                         </MenuItem.Icon>
@@ -92,9 +92,10 @@
         <!--#region NewProduct-->
         <ScrollViewer DockPanel.Dock="Left"
                       VerticalScrollBarVisibility="Auto"
-                      Visibility="{Binding AddProductPanelVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <!--<userControls:AddProductUserControl DockPanel.Dock="Left"
-                                                DataContext="{Binding AddProductViewModel}"/>-->
+                      Visibility="{Binding AddProductPanelVisibilityMode}">
+            <userControls:AddProductUserControl DockPanel.Dock="Left"
+                                                DataContext="{Binding AddProductViewModel}"
+                                                />
         </ScrollViewer>
         <!--#endregion-->
 

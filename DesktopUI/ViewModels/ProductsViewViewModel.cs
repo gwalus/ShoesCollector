@@ -12,46 +12,12 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Prism.Ioc;
-using DesktopUI.Interfaces;
 
 namespace DesktopUI.ViewModels
 {
     public class ProductsViewViewModel : BindableBase
     {        
-        private readonly IDialogCoordinator _dialogCoordinator;       
-        private bool _addProductPanelVisible;
-
-        public bool AddProductPanelVisible
-        {
-            get { return _addProductPanelVisible; }
-            set
-            {
-                _addProductPanelVisible = value;
-                //OnPropertyChanged(nameof(AddProductPanelVisible));
-            }
-        }
-
-        private bool _updatingProductPanelVisible;
-
-        public bool UpdatingProductPanelVisible
-        {
-            get { return _updatingProductPanelVisible; }
-            set
-            {
-                _updatingProductPanelVisible = value;
-                //OnPropertyChanged(nameof(UpdatingProductPanelVisible));
-            }
-        }
-
-
-        private bool _updateProductPanelVisible;
-
-        public bool UpdateProductPanelVisible
-        {
-            get { return _updateProductPanelVisible; }
-            //set { _updateProductPanelVisible = value; OnPropertyChanged(nameof(UpdateProductPanelVisible)); }
-        }
-
+        private readonly IDialogCoordinator _dialogCoordinator;
         
         private Visibility _searchBarVisibilityMode = Visibility.Collapsed;
 
@@ -61,24 +27,16 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _searchBarVisibilityMode, value); }
         }
 
+        private Visibility _addProductPanelVisibilityMode = Visibility.Collapsed;
 
-        //public Visibility IsSearchBarVisible { get; set; } = Visibility.Collapsed;
+        public Visibility AddProductPanelVisibilityMode
+        {
+            get { return _addProductPanelVisibilityMode; }
+            set { SetProperty(ref _addProductPanelVisibilityMode, value); }
+        }
 
         public ShowSearchBarCommand ShowSearchBarCommand { get; set; }
-
-
-        #region Properties
-        //private Product _selectedProduct;
-
-        //public Product SelectedProduct
-        //{
-        //    get { return _selectedProduct; }
-        //    set
-        //    {
-        //        _selectedProduct = value;
-        //        OnPropertyChanged(nameof(SelectedProduct));
-        //    }
-        //}
+        public ShowAddProductPanelCommand ShowAddProductPanelCommand { get; set; }
 
         private ProductSearchFilterViewModel _productSearchFilterViewModel = ContainerLocator.Container.Resolve<ProductSearchFilterViewModel>();
         public ProductSearchFilterViewModel ProductSearchFilterViewModel
@@ -95,9 +53,7 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _products, value); }
         }
 
-        private readonly IBaseRestClient _restClient;
-
-        #endregion
+        private readonly IBaseRestClient _restClient;        
 
         #region Commands
         public GetProductsCommand GetProductsCommand { get; set; }
@@ -105,37 +61,18 @@ namespace DesktopUI.ViewModels
         //public ShowUpdatingProductPanelCommand ShowUpdatingProductPanelCommand { get; set; }
         //public ShowNewProductPanelCommand ShowNewProductPanelCommand { get; set; }
         //public SelectedCellsChanged SelectedCellsChanged { get; set; }
-        public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }        
+        public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }
         #endregion
 
         //public TestCommand Test { get; set; }
 
+        private AddProductViewModel _addProductViewModel = ContainerLocator.Container.Resolve<AddProductViewModel>();
 
-        #region ViewModels
-        //private TotalsViewModel totalsViewModel;
-
-        //public TotalsViewModel TotalsViewModel
-        //{
-        //    get { return totalsViewModel; }
-        //    set
-        //    {
-        //        totalsViewModel = value;
-        //        OnPropertyChanged(nameof(TotalsViewModel));
-        //    }
-        //}
-
-        //public AddProductViewModel AddProductViewModel { get; set; }
-        //private UpdateProductViewModel _updateProductViewModel;
-        //public UpdateProductViewModel UpdateProductViewModel
-        //{
-        //    get { return _updateProductViewModel; }
-        //    set
-        //    {
-        //        _updateProductViewModel = value;
-        //        OnPropertyChanged(nameof(UpdateProductViewModel));
-        //    }
-        //}
-        #endregion
+        public AddProductViewModel AddProductViewModel
+        {
+            get { return _addProductViewModel; }
+            set { SetProperty(ref _addProductViewModel, value); }
+        }
 
         public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator)
         {
@@ -149,6 +86,7 @@ namespace DesktopUI.ViewModels
             //AddProductViewModel = new AddProductViewModel(this, dataRepository, dialogCoordinator);
 
             ShowSearchBarCommand = new ShowSearchBarCommand(this);
+            ShowAddProductPanelCommand = new ShowAddProductPanelCommand(this);
 
             //Test = new TestCommand(this);            
 
@@ -185,39 +123,9 @@ namespace DesktopUI.ViewModels
             await controller.CloseAsync();
         }
 
-        //private async void GetSearchedProducts(string name)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(name))
-        //    {
-        //        var productsSearched = await _dataRepository.SearchProduct(name);
-
-        //        Products = new ObservableCollection<Product>(productsSearched);
-        //    }
-        //    //else GetProducts();
-        //}
-
-        //private void SetTotalsViewModel(List<Product> products)
-        //{
-        //    TotalsViewModel = new TotalsViewModel(products);
-        //}
-
         //public void SelectedProductChanged()
         //{
         //    UpdateProductViewModel = new UpdateProductViewModel(this, _dataRepository, _dialogCoordinator, _selectedProduct);
-        //}
-
-        //public void ShowAddingProductPanel()
-        //{
-        //    if (AddProductPanelVisible)
-        //        AddProductPanelVisible = false;
-        //    else AddProductPanelVisible = true;
-        //}
-
-        //public void ShowUpdatingProductPanel()
-        //{
-        //    if (UpdatingProductPanelVisible)
-        //        UpdatingProductPanelVisible = false;
-        //    else UpdatingProductPanelVisible = true;
         //}
 
         public void SearchProductInGoogle(string url)
