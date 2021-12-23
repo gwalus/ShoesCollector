@@ -11,6 +11,7 @@ namespace WebAPI.Helpers
             CreateMap<ProductAddDto, Product>();
             CreateMap<ProductUpdateDto, Product>();
             CreateMap<BrandToAddDto, Brand>();
+            CreateMap<ProductSourceToAddDto, ProductSource>();
         }
     }
 }
