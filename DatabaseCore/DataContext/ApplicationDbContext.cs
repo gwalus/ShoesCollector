@@ -10,5 +10,6 @@ namespace DatabaseCore.DataContext
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<ProductSource> ProductSources { get; set; }
     }
 }
