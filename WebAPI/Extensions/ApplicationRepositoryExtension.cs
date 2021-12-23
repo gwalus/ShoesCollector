@@ -14,6 +14,7 @@ namespace WebAPI.Extensions
             services.AddScoped<IProductPricesStatisticsRepository, ProductStatisticsRepository>();
             services.AddScoped<ITotalsStatisticsRepository, TotalsStatisticsRepository>();
             services.AddScoped<IProductGroupDataRepository, ProductGroupDataRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
 
             return services;
         }
