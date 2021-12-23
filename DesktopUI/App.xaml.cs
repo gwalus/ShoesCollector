@@ -31,11 +31,13 @@ namespace DesktopUI
             containerRegistry.RegisterSingleton<ProductTotalViewModel>();
             containerRegistry.RegisterSingleton<ProductsViewViewModel>();
             containerRegistry.RegisterSingleton<StatisticsViewViewModel>();
+            containerRegistry.RegisterSingleton<AddProductViewModel>();
 
             containerRegistry.RegisterScoped<ITotalService, TotalService>();
             containerRegistry.RegisterScoped<IProductService, ProductService>();
             containerRegistry.RegisterScoped<IStatisticsService, StatisticsService>();
             containerRegistry.RegisterScoped<IProductGroupDataService, ProductGroupDataService>();
+            containerRegistry.RegisterScoped<IBrandService, BrandService>();
 
             containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
         }
