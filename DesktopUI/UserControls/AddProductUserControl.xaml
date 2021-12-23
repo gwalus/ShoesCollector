@@ -19,7 +19,7 @@
         <Border Style="{StaticResource DataBorder}">
             <StackPanel>
                 <TextBlock Text="Brand:"/>
-                <ComboBox ItemsSource="{Binding ListOfBrands}"
+                <ComboBox ItemsSource="{Binding Brands}"
                               SelectedItem="{Binding BrandSelected, Mode=TwoWay}"/>
                 <TextBlock Text="Name:"/>
                 <TextBox Text="{Binding Name, Mode=TwoWay}"/>
@@ -32,7 +32,7 @@
                 <TextBlock Text="Box:"/>
                 <CheckBox IsChecked="{Binding Box, Mode=TwoWay}"/>
                 <TextBlock Text="Source:"/>
-                <ComboBox ItemsSource="{Binding ListOfSources}" 
+                <ComboBox ItemsSource="{Binding Sources}" 
                               SelectedItem="{Binding SourceSelected, Mode=TwoWay}"/>
                 <TextBlock Text="Date of purchase:"/>
                 <DatePicker SelectedDate="{Binding DateOfPurchase, Mode=TwoWay}"/>

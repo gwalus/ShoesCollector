@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DesktopUI.ViewModels
 {
     public class AddProductViewModel : BindableBase
-    {      
+    {
         //private Product product;
         //public Product Product
         //{
@@ -20,7 +20,20 @@ namespace DesktopUI.ViewModels
         //    }
         //}
 
-        public List<string> ListOfBrands { get; set; }
+        private List<string> _brands;
+
+        public List<string> Brands
+        {
+            get { return _brands; }
+            set 
+            {
+                _brands = value; 
+                SetProperty(ref _brands, value);
+            }
+        }
+
+
+        //public List<string> ListOfBrands { get; set; }
         //private object brandSelected = StaticLists.listOfBrands.ElementAt(0);
         //public object BrandSelected
         //{
@@ -88,7 +101,17 @@ namespace DesktopUI.ViewModels
             }
         }
 
-        //public List<string> ListOfSources { get; set; };
+        private List<string> _sources;
+
+        public List<string> Sources
+        {
+            get { return _sources; }
+            set
+            {
+                _sources = value;
+                SetProperty(ref _sources, value);
+            }
+        }
         //private object sourceSelected = StaticLists.listOfSources.ElementAt(0);
 
         //public object SourceSelected
@@ -115,6 +138,7 @@ namespace DesktopUI.ViewModels
 
         private double _purchasePrice = 100.00;
         private readonly IBrandService _brandService;
+        private readonly IProductSourceService _productSourceService;
 
         public double PurchasePrice
         {
@@ -126,15 +150,17 @@ namespace DesktopUI.ViewModels
             }
         }
 
-        public AddProductViewModel(IBrandService brandService)
+        public AddProductViewModel(IBrandService brandService, IProductSourceService productSourceService)
         {
             _brandService = brandService;
+            _productSourceService = productSourceService;
             SetModel();
         }
 
         private void SetModel()
         {
-            ListOfBrands = Task.Run(async () =>  await _brandService.GetBrandAsync()).Result.Select(x => x.Name).ToList();
+            Brands = Task.Run(async () =>  await _brandService.GetBrandAsync()).Result.Select(x => x.Name).ToList();
+            Sources = Task.Run(async () => await _productSourceService.GetProductSourcesAsync()).Result.Select(x => x.Name).ToList();
         }
     }
 }
