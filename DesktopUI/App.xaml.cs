@@ -23,8 +23,6 @@ namespace DesktopUI
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //ViewModelLocationProvider.Register<SearchBarUserControl, ProductSearchFilterViewModel>();
-
             containerRegistry.RegisterScoped<IBaseRestClient, BaseRestClient>();
             containerRegistry.RegisterInstance<IRestClient>(new RestClient());
 
@@ -38,6 +36,7 @@ namespace DesktopUI
             containerRegistry.RegisterScoped<IStatisticsService, StatisticsService>();
             containerRegistry.RegisterScoped<IProductGroupDataService, ProductGroupDataService>();
             containerRegistry.RegisterScoped<IBrandService, BrandService>();
+            containerRegistry.RegisterScoped<IProductSourceService, ProductSourceService>();
 
             containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
         }
