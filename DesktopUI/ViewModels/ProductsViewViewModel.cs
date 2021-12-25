@@ -16,9 +16,9 @@ using Prism.Ioc;
 namespace DesktopUI.ViewModels
 {
     public class ProductsViewViewModel : BindableBase
-    {        
+    {
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+
         private Visibility _searchBarVisibilityMode = Visibility.Collapsed;
 
         public Visibility SearchBarVisibilityMode
@@ -35,8 +35,29 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _addProductPanelVisibilityMode, value); }
         }
 
+        private Visibility _updateProductPanelVisibilityMode = Visibility.Collapsed;
+
+        public Visibility UpdateProductPanelVisibilityMode
+        {
+            get { return _updateProductPanelVisibilityMode; }
+            set { SetProperty(ref _updateProductPanelVisibilityMode, value); }
+        }
+
+        private Product _selectedProduct;
+
+        public Product SelectedProduct
+        {
+            get { return _selectedProduct; }
+            set 
+            {
+                _selectedProduct = value; 
+                SetProperty(ref _selectedProduct, value);
+            }
+        }
+
         public ShowSearchBarCommand ShowSearchBarCommand { get; set; }
         public ShowAddProductPanelCommand ShowAddProductPanelCommand { get; set; }
+        public ShowUpdateProductPanelCommand ShowUpdateProductPanelCommand { get; set; }
 
         private ProductSearchFilterViewModel _productSearchFilterViewModel = ContainerLocator.Container.Resolve<ProductSearchFilterViewModel>();
         public ProductSearchFilterViewModel ProductSearchFilterViewModel
@@ -53,14 +74,14 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _products, value); }
         }
 
-        private readonly IBaseRestClient _restClient;        
+        private readonly IBaseRestClient _restClient;
 
         #region Commands
         public GetProductsCommand GetProductsCommand { get; set; }
 
         //public ShowUpdatingProductPanelCommand ShowUpdatingProductPanelCommand { get; set; }
         //public ShowNewProductPanelCommand ShowNewProductPanelCommand { get; set; }
-        //public SelectedCellsChanged SelectedCellsChanged { get; set; }
+        
         public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }
         #endregion
 
@@ -70,15 +91,33 @@ namespace DesktopUI.ViewModels
 
         public AddProductViewModel AddProductViewModel
         {
-            get { return _addProductViewModel; }
+            get
+            {
+                _addProductViewModel.Header = "Add product";
+                _addProductViewModel.ButtonContent = "Add";
+                return _addProductViewModel;
+            }
             set { SetProperty(ref _addProductViewModel, value); }
+        }
+
+        private AddProductViewModel _updateProductViewModel = ContainerLocator.Container.Resolve<AddProductViewModel>();
+
+        public AddProductViewModel UpdateProductViewModel
+        {
+            get
+            {
+                _updateProductViewModel.Header = "Update product";
+                _updateProductViewModel.ButtonContent = "Update";
+                return _updateProductViewModel;
+            }
+            set { SetProperty(ref _updateProductViewModel, value); }
         }
 
         public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator)
         {
             _dialogCoordinator = dialogCoordinator;
             GetProductsCommand = new GetProductsCommand(this);
-            
+
             //ShowNewProductPanelCommand = new ShowNewProductPanelCommand(this);
             //ShowUpdatingProductPanelCommand = new ShowUpdatingProductPanelCommand(this);
             //SelectedCellsChanged = new SelectedCellsChanged(this);
@@ -87,6 +126,7 @@ namespace DesktopUI.ViewModels
 
             ShowSearchBarCommand = new ShowSearchBarCommand(this);
             ShowAddProductPanelCommand = new ShowAddProductPanelCommand(this);
+            ShowUpdateProductPanelCommand = new ShowUpdateProductPanelCommand(this);
 
             //Test = new TestCommand(this);            
 

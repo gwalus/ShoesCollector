@@ -1,4 +1,6 @@
-﻿using DesktopUI.Interfaces;
+﻿using AutoMapper;
+using DesktopUI.Helpers;
+using DesktopUI.Interfaces;
 using DesktopUI.Services;
 using DesktopUI.ViewModels;
 using DesktopUI.Views;
@@ -26,10 +28,16 @@ namespace DesktopUI
             containerRegistry.RegisterScoped<IBaseRestClient, BaseRestClient>();
             containerRegistry.RegisterInstance<IRestClient>(new RestClient());
 
+            containerRegistry.RegisterInstance(typeof(IMapper), new Mapper(
+                new MapperConfiguration(config =>
+                {
+                    config.AddMaps(typeof(AutoMapperProfiles).Assembly);
+                })));
+
             containerRegistry.RegisterSingleton<ProductTotalViewModel>();
             containerRegistry.RegisterSingleton<ProductsViewViewModel>();
             containerRegistry.RegisterSingleton<StatisticsViewViewModel>();
-            containerRegistry.RegisterSingleton<AddProductViewModel>();
+            containerRegistry.RegisterMany<AddProductViewModel>();
 
             containerRegistry.RegisterScoped<ITotalService, TotalService>();
             containerRegistry.RegisterScoped<IProductService, ProductService>();

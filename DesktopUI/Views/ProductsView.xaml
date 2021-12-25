@@ -64,50 +64,34 @@
                     </MenuItem>
 
                     <MenuItem Header="Update"
-                                  Command="{Binding ShowUpdatingProductPanelCommand}">
+                                  Command="{Binding ShowUpdateProductPanelCommand}">
                         <MenuItem.Icon>
                             <materialDesing:PackIcon Kind="Update" HorizontalAlignment="Center"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-
-                <!--<MenuItem Header="Test" Command="{Binding Test}">
-                
-            </MenuItem>-->
             </Menu>
-
-            <!--<TextBox metroControls:TextBoxHelper.Watermark="Search by name..."
-                     metroControls:TextBoxHelper.ClearTextButton="True"
-                     Text="{Binding TextBoxSearch, UpdateSourceTrigger=PropertyChanged}"
-                                   Visibility="{Binding Products, Converter={StaticResource NullToVisibilityConverter}}"
-                                   Margin="10, 10"/>-->
 
             <userControls:SearchBarUserControl
                 Visibility="{Binding SearchBarVisibilityMode}"
                 Margin="10, 10"/>
 
         </StackPanel>
-        <!--#endregion-->
-
-        <!--#region NewProduct-->
+        
         <ScrollViewer DockPanel.Dock="Left"
                       VerticalScrollBarVisibility="Auto"
                       Visibility="{Binding AddProductPanelVisibilityMode}">
             <userControls:AddProductUserControl DockPanel.Dock="Left"
-                                                DataContext="{Binding AddProductViewModel}"
-                                                />
+                                                DataContext="{Binding AddProductViewModel}"/>
         </ScrollViewer>
-        <!--#endregion-->
 
-        <!--#region UpdateProduct-->
         <ScrollViewer DockPanel.Dock="Left" 
                       VerticalScrollBarVisibility="Auto"
-                      Visibility="{Binding UpdatingProductPanelVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <!--<userControls:UpdateProductUserControl DockPanel.Dock="Left"
-                                                   DataContext="{Binding UpdateProductViewModel}"/>-->
+                      Visibility="{Binding UpdateProductPanelVisibilityMode}">
+            <userControls:AddProductUserControl DockPanel.Dock="Left"
+                                                   DataContext="{Binding UpdateProductViewModel}"/>
 
         </ScrollViewer>
-        <!--#endregion-->
 
         <!--#region Data-->
         <DataGrid ItemsSource="{Binding Products}"
