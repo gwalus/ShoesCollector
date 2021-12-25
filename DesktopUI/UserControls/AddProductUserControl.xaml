@@ -9,7 +9,7 @@
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}">
     <StackPanel>
-        <TextBlock Text="Add product" 
+        <TextBlock Text="{Binding Header}" 
                            FontSize="16"
                            FontWeight="Bold"
                            FontStyle="Italic"
@@ -20,7 +20,7 @@
             <StackPanel>
                 <TextBlock Text="Brand:"/>
                 <ComboBox ItemsSource="{Binding Brands}"
-                              SelectedItem="{Binding BrandSelected, Mode=TwoWay}"/>
+                              SelectedItem="{Binding SelectedBrand, Mode=TwoWay}"/>
                 <TextBlock Text="Name:"/>
                 <TextBox Text="{Binding Name, Mode=TwoWay}"/>
                 <TextBlock Text="Product code:"/>
@@ -33,14 +33,20 @@
                 <CheckBox IsChecked="{Binding Box, Mode=TwoWay}"/>
                 <TextBlock Text="Source:"/>
                 <ComboBox ItemsSource="{Binding Sources}" 
-                              SelectedItem="{Binding SourceSelected, Mode=TwoWay}"/>
+                              SelectedItem="{Binding SelectedProductSource, Mode=TwoWay}"/>
                 <TextBlock Text="Date of purchase:"/>
                 <DatePicker SelectedDate="{Binding DateOfPurchase, Mode=TwoWay}"/>
+                <TextBlock Text="Date of sale:"/>
+                <DatePicker SelectedDate="{Binding SaleDate, Mode=TwoWay}"/>
                 <TextBlock Text="Purchase price:"/>
                 <TextBox Text="{Binding PurchasePrice, Mode=TwoWay}"/>
-                <Button Content="Add" 
-                            Command="{Binding AddNewProductCommand}"
-                            CommandParameter="{Binding Product}"
+                <TextBlock Text="Selling price:"/>
+                <TextBox Text="{Binding SellingPrice, Mode=TwoWay}"/>
+                <TextBlock Text="Shipping price:"/>
+                <TextBox Text="{Binding ShippingPrice, Mode=TwoWay}"/>
+                <Button Content="{Binding ButtonContent}" 
+                            Command="{Binding AddProductCommand}"
+                            CommandParameter="{Binding}"
                             Style="{StaticResource MahApps.Styles.Button}"
                         Margin="0 10 0 0">
                 </Button>

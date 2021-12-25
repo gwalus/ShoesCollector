@@ -1,4 +1,7 @@
-﻿using DesktopUI.Interfaces;
+﻿using AutoMapper;
+using DesktopUI.Commands;
+using DesktopUI.Interfaces;
+using DesktopUI.ViewModelDtos;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -9,42 +12,33 @@ namespace DesktopUI.ViewModels
 {
     public class AddProductViewModel : BindableBase
     {
-        //private Product product;
-        //public Product Product
-        //{
-        //    get { return product; }
-        //    set
-        //    {
-        //        product = value;
-        //        OnPropertyChanged(nameof(Product));
-        //    }
-        //}
+        private readonly IBrandService _brandService;
+        private readonly IProductSourceService _productSourceService;
+        private readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        private List<string> _brands;
+        private string _header;
 
-        public List<string> Brands
+        public string Header
         {
-            get { return _brands; }
+            get { return _header; }
             set 
             {
-                _brands = value; 
-                SetProperty(ref _brands, value);
+                _header = value; 
+                SetProperty(ref _header, value);
             }
         }
 
-
-        //public List<string> ListOfBrands { get; set; }
-        //private object brandSelected = StaticLists.listOfBrands.ElementAt(0);
-        //public object BrandSelected
-        //{
-        //    get { return brandSelected; }
-        //    set
-        //    {
-        //        brandSelected = value;
-        //        OnPropertyChanged(nameof(BrandSelected));
-        //        SetProduct();
-        //    }
-        //}
+        private List<string> _brands;
+        public List<string> Brands
+        {
+            get { return _brands; }
+            set
+            {
+                _brands = value;
+                SetProperty(ref _brands, value);
+            }
+        }
 
         private string _name;
         public string Name
@@ -55,7 +49,7 @@ namespace DesktopUI.ViewModels
                 _name = value;
                 SetProperty(ref _name, value);
             }
-        }
+        }        
 
         private string _productCode;
         public string ProductCode
@@ -112,18 +106,6 @@ namespace DesktopUI.ViewModels
                 SetProperty(ref _sources, value);
             }
         }
-        //private object sourceSelected = StaticLists.listOfSources.ElementAt(0);
-
-        //public object SourceSelected
-        //{
-        //    get { return sourceSelected; }
-        //    set
-        //    {
-        //        sourceSelected = value;
-        //        OnPropertyChanged(nameof(SourceSelected));
-        //        SetProduct();
-        //    }
-        //}
 
         private DateTime _dateOfPurchase = DateTime.Today;
         public DateTime DateOfPurchase
@@ -136,10 +118,18 @@ namespace DesktopUI.ViewModels
             }
         }
 
-        private double _purchasePrice = 100.00;
-        private readonly IBrandService _brandService;
-        private readonly IProductSourceService _productSourceService;
+        private DateTime? _saleDate = null;
+        public DateTime? SaleDate
+        {
+            get { return _saleDate; }
+            set
+            {
+                _saleDate = value;
+                SetProperty(ref _saleDate, value);
+            }
+        }
 
+        private double _purchasePrice = 100.00;        
         public double PurchasePrice
         {
             get { return _purchasePrice; }
@@ -150,10 +140,76 @@ namespace DesktopUI.ViewModels
             }
         }
 
-        public AddProductViewModel(IBrandService brandService, IProductSourceService productSourceService)
+        private double _sellingPrice = 100.00;
+        public double SellingPrice
+        {
+            get { return _sellingPrice; }
+            set
+            {
+                _sellingPrice = value;
+                SetProperty(ref _sellingPrice, value);
+            }
+        }
+
+        private double _shippingPrice = 10.00;
+        public double ShippingPrice
+        {
+            get { return _shippingPrice; }
+            set
+            {
+                _shippingPrice = value;
+                SetProperty(ref _shippingPrice, value);
+            }
+        }
+
+        private string _selectedBrand;
+
+        public string SelectedBrand
+        {
+            get { return _selectedBrand; }
+            set 
+            { 
+                _selectedBrand = value; 
+                SetProperty(ref _selectedBrand, value);
+            }
+        }
+
+        private string _selectedProductSource;
+
+        public string SelectedProductSource
+        {
+            get { return _selectedProductSource; }
+            set 
+            {
+                _selectedProductSource = value; 
+                SetProperty(ref _selectedProductSource, value);
+            }
+        }
+
+        private string _buttonContent;
+
+        public string ButtonContent
+        {
+            get { return _buttonContent; }
+            set 
+            {
+                _buttonContent = value; 
+                SetProperty(ref _buttonContent, value);
+            }
+        }
+
+
+        public AddProductCommand AddProductCommand { get; set; }
+
+        public AddProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper)
         {
             _brandService = brandService;
             _productSourceService = productSourceService;
+            _productService = productService;
+            _mapper = mapper;
+
+            AddProductCommand = new AddProductCommand(this);
+
             SetModel();
         }
 
@@ -161,6 +217,13 @@ namespace DesktopUI.ViewModels
         {
             Brands = Task.Run(async () =>  await _brandService.GetBrandAsync()).Result.Select(x => x.Name).ToList();
             Sources = Task.Run(async () => await _productSourceService.GetProductSourcesAsync()).Result.Select(x => x.Name).ToList();
+        }
+
+        internal async void AddProduct(AddProductViewModel addProductViewModel)
+        {
+            var productToAdd = _mapper.Map<ProductApiToAdd>(addProductViewModel);
+
+            await _productService.AddProductAsync(productToAdd);
         }
     }
 }
