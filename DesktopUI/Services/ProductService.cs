@@ -7,6 +7,8 @@ using Domain.Interfaces.Clients;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Prism.Ioc;
+using DesktopUI.ViewModelDtos;
+using System.Net;
 
 namespace DesktopUI.Services
 {
@@ -66,6 +68,16 @@ namespace DesktopUI.Services
                 queryStringParameters.Add(nameof(filter.Source).ToLower(), filter.Source);
 
             return queryStringParameters;
+        }
+
+        public async Task<bool> AddProductAsync(ProductApiToAdd product)
+        {
+            return await _restClient.CallAsync<bool>(new RestClientSettings
+            {
+                Endpoint = ApiUrl.Product,
+                Method = RestSharp.Method.POST,
+                Payload = product
+            });
         }
     }
 }
