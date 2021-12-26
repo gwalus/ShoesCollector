@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using DesktopUI.Commands;
 using DesktopUI.Interfaces;
+using DesktopUI.ViewModelDtos;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace DesktopUI.ViewModels
         private readonly IProductSourceService _productSourceService;
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
-
+        private readonly IDialogService _dialogService;
         private string _header = "Update product";
 
         public string Header
@@ -201,13 +203,13 @@ namespace DesktopUI.ViewModels
         public UpdateProductCommand UpdateProductCommand { get; set; }
 
 
-        public UpdateProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper)
+        public UpdateProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper, IDialogService dialogService)
         {
             _brandService = brandService;
             _productSourceService = productSourceService;
             _productService = productService;
             _mapper = mapper;
-
+            _dialogService = dialogService;
             UpdateProductCommand = new UpdateProductCommand(this);
 
             SetModel();
@@ -219,11 +221,15 @@ namespace DesktopUI.ViewModels
             Sources = Task.Run(async () => await _productSourceService.GetProductSourcesAsync()).Result.Select(x => x.Name).ToList();
         }
 
-        internal async void UpdateProduct()
+        internal async void UpdateProduct(UpdateProductViewModel updateProductViewModel)
         {
-            //var productToAdd = _mapper.Map<ProductApiToAdd>(addProductViewModel);
+            var productToUpdate = _mapper.Map<ProductApiToUpdate>(updateProductViewModel);
 
-            //await _productService.AddProductAsync(productToAdd);
+            string message = string.Empty;
+            await _productService.UpdateProductAsync(productToUpdate);
+                message = $"Product {productToUpdate.Id} {productToUpdate.Name} has been updated";            
+
+            _dialogService.ShowDialog("NotificationDialog", new DialogParameters($"message={message}"), null);
         }
     }
 }

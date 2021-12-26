@@ -22,7 +22,7 @@ namespace DesktopUI.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.UpdateProduct();
+            _viewModel.UpdateProduct(parameter as UpdateProductViewModel);
         }
     }
 }
