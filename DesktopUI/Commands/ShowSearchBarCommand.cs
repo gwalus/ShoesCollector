@@ -23,9 +23,9 @@ namespace DesktopUI.Commands
 
         public void Execute(object parameter)
         {
-            if (_viewModel.SearchBarVisibilityMode == Visibility.Collapsed)
-                _viewModel.SearchBarVisibilityMode = Visibility.Visible;
-            else _viewModel.SearchBarVisibilityMode = Visibility.Collapsed;
+            _viewModel.SearchBarVisibilityMode = _viewModel.SearchBarVisibilityMode == Visibility.Collapsed 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
         }
     }
 }

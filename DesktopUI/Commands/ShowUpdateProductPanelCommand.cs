@@ -23,9 +23,9 @@ namespace DesktopUI.Commands
 
         public void Execute(object parameter)
         {
-            if (_viewModel.UpdateProductPanelVisibilityMode == Visibility.Collapsed)
-                _viewModel.UpdateProductPanelVisibilityMode = Visibility.Visible;
-            else _viewModel.UpdateProductPanelVisibilityMode = Visibility.Collapsed;
+            _viewModel.UpdateProductPanelVisibilityMode = _viewModel.UpdateProductPanelVisibilityMode == Visibility.Collapsed 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
         }
     }
 }
