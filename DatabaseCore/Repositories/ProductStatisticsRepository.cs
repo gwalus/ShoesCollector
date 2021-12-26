@@ -33,7 +33,9 @@ namespace DatabaseCore.Repositories
 
             var dateFirstPurchase = ConvertStringToDateTime(firstPurchase.DateOfPurchase);
 
-            return CalculateToDays(dateFirstPurchase);
+            if (dateFirstPurchase != null)
+                return CalculateToDays(dateFirstPurchase.Value);
+            return -1;
         }
 
         public async Task<int> GetDaysOfLatestPurchaseAsync()
@@ -41,8 +43,9 @@ namespace DatabaseCore.Repositories
             var latestPurchase = await GetLatestPurchaseAsync();
 
             var dateLatestPurchase = ConvertStringToDateTime(latestPurchase.DateOfPurchase);
-
-            return CalculateToDays(dateLatestPurchase);
+            if (dateLatestPurchase != null)
+                return CalculateToDays(dateLatestPurchase.Value);
+            return -1;
         }
 
         public async Task<int> GetDaysOfLatestSaleAsync()
@@ -50,8 +53,9 @@ namespace DatabaseCore.Repositories
             var latestSale = await GetLatestSaleAsync();
 
             var dateLatestSale = ConvertStringToDateTime(latestSale.SaleDate);
-
-            return CalculateToDays(dateLatestSale);
+            if(dateLatestSale != null)
+                return CalculateToDays(dateLatestSale.Value);
+            return -1;
         }
 
         public async Task<Product> GetFirstPurchaseAsync()
@@ -64,7 +68,7 @@ namespace DatabaseCore.Repositories
             var latestPuchase = await _dbContext.Products.ToListAsync();
 
             return latestPuchase
-                .OrderByDescending(p => DateTime.Parse(p.DateOfPurchase))
+                .OrderByDescending(p => DateTime.TryParse(p.DateOfPurchase, out DateTime result))
                 .FirstOrDefault();
         }
 
@@ -88,7 +92,7 @@ namespace DatabaseCore.Repositories
             return await _dbContext.Products.MinAsync(p => p.PurchasePrice);
         }
 
-        private DateTime ConvertStringToDateTime(string date) => DateTime.Parse(date);
-        private int CalculateToDays(DateTime date) => (DateTime.Now - date).Days;
+        private static DateTime? ConvertStringToDateTime(string date) => DateTime.TryParse(date, out DateTime result) ? result : null;
+        private static int CalculateToDays(DateTime date) => (DateTime.Now - date).Days;
     }
 }
