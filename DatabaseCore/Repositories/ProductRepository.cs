@@ -66,7 +66,7 @@ namespace DatabaseCore.Repositories
             if (productFilter.Box.HasValue)
                 query = query.Where(x => x.Box.Value == productFilter.Box);
 
-            return await query.ToListAsync();            
+            return await query.ToListAsync();
         }
 
         public Task<Product> GetByIdAsync()
@@ -78,7 +78,27 @@ namespace DatabaseCore.Repositories
         {
             var productToUpdate = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == product.Id);
 
-            productToUpdate = product;
+            productToUpdate.Brand = product.Brand;
+            productToUpdate.Name = product.Name;
+            productToUpdate.ProductCode = product.ProductCode;
+            productToUpdate.Color = product.Color;
+            productToUpdate.Size = product.Size;
+            productToUpdate.Box = product.Box;
+            productToUpdate.Source = product.Source;
+            productToUpdate.DateOfPurchase = product.DateOfPurchase;
+            productToUpdate.PurchasePrice = product.PurchasePrice;
+            if (product.SaleDate != null)
+                productToUpdate.SaleDate = product.SaleDate;
+            if (product.SellingPrice.HasValue)
+                productToUpdate.SellingPrice = product.SellingPrice;
+            if (product.ShippingPrice.HasValue)
+                productToUpdate.ShippingPrice = product.ShippingPrice;
+            if (product.PriceWithoutShipping.HasValue)
+                productToUpdate.PriceWithoutShipping = product.PriceWithoutShipping;
+            if (product.Profit.HasValue)
+                productToUpdate.Profit = product.Profit;
+
+            productToUpdate.IsSold = product.IsSold;
             return await _dbContext.SaveChangesAsync() > 0;
         }
     }
