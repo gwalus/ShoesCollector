@@ -24,7 +24,6 @@ namespace DesktopUI.ViewModels
             get { return _header; }
             set 
             {
-                _header = value; 
                 SetProperty(ref _header, value);
             }
         }
@@ -35,7 +34,6 @@ namespace DesktopUI.ViewModels
             get { return _brands; }
             set
             {
-                _brands = value;
                 SetProperty(ref _brands, value);
             }
         }
@@ -45,8 +43,7 @@ namespace DesktopUI.ViewModels
         {
             get { return _name; }
             set
-            {
-                _name = value;
+            {                
                 SetProperty(ref _name, value);
             }
         }        
@@ -57,8 +54,7 @@ namespace DesktopUI.ViewModels
             get { return _productCode; }
             set
             {
-                _productCode = value.ToUpper();
-                SetProperty(ref _productCode, value);
+                SetProperty(ref _productCode, value.ToUpper());
             }
         }
 
@@ -68,7 +64,6 @@ namespace DesktopUI.ViewModels
             get { return _color; }
             set
             {
-                _color = value;
                 SetProperty(ref _color, value);
             }
         }
@@ -79,7 +74,6 @@ namespace DesktopUI.ViewModels
             get { return _size; }
             set
             {
-                _size = value;
                 SetProperty(ref _size, value);
             }
         }
@@ -90,7 +84,6 @@ namespace DesktopUI.ViewModels
             get { return _box; }
             set
             {
-                _box = value;
                 SetProperty(ref _box, value);
             }
         }
@@ -102,7 +95,6 @@ namespace DesktopUI.ViewModels
             get { return _sources; }
             set
             {
-                _sources = value;
                 SetProperty(ref _sources, value);
             }
         }
@@ -113,7 +105,6 @@ namespace DesktopUI.ViewModels
             get { return _dateOfPurchase; }
             set
             {
-                _dateOfPurchase = value;
                 SetProperty(ref _dateOfPurchase, value);
             }
         }
@@ -124,7 +115,6 @@ namespace DesktopUI.ViewModels
             get { return _saleDate; }
             set
             {
-                _saleDate = value;
                 SetProperty(ref _saleDate, value);
             }
         }
@@ -135,7 +125,6 @@ namespace DesktopUI.ViewModels
             get { return _purchasePrice; }
             set
             {
-                _purchasePrice = value;
                 SetProperty(ref _purchasePrice, value);
             }
         }
@@ -146,7 +135,6 @@ namespace DesktopUI.ViewModels
             get { return _sellingPrice; }
             set
             {
-                _sellingPrice = value;
                 SetProperty(ref _sellingPrice, value);
             }
         }
@@ -157,7 +145,6 @@ namespace DesktopUI.ViewModels
             get { return _shippingPrice; }
             set
             {
-                _shippingPrice = value;
                 SetProperty(ref _shippingPrice, value);
             }
         }
@@ -169,7 +156,6 @@ namespace DesktopUI.ViewModels
             get { return _selectedBrand; }
             set 
             { 
-                _selectedBrand = value; 
                 SetProperty(ref _selectedBrand, value);
             }
         }
@@ -181,7 +167,6 @@ namespace DesktopUI.ViewModels
             get { return _selectedProductSource; }
             set 
             {
-                _selectedProductSource = value; 
                 SetProperty(ref _selectedProductSource, value);
             }
         }
@@ -193,11 +178,9 @@ namespace DesktopUI.ViewModels
             get { return _buttonContent; }
             set 
             {
-                _buttonContent = value; 
                 SetProperty(ref _buttonContent, value);
             }
         }
-
 
         public AddProductCommand AddProductCommand { get; set; }
 
@@ -209,7 +192,7 @@ namespace DesktopUI.ViewModels
             _mapper = mapper;
 
             AddProductCommand = new AddProductCommand(this);
-
+            
             SetModel();
         }
 
