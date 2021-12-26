@@ -13,9 +13,9 @@ namespace DesktopUI.Converters
             if (string.IsNullOrWhiteSpace(value.ToString()))
                 return null;
 
-            var date = DateTime.Parse(value.ToString());
-            return $"{date.ToShortDateString()}";
+            DateTime.TryParse(value.ToString(), out DateTime result);
 
+            return result.Year == 0001 ? null : $"{result.ToShortDateString()}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

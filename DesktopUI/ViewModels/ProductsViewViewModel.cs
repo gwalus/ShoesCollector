@@ -170,7 +170,7 @@ namespace DesktopUI.ViewModels
                 UpdateProductViewModel.Box = _selectedProduct.Box.GetValueOrDefault();
                 UpdateProductViewModel.SelectedProductSource = _selectedProduct.Source;
                 UpdateProductViewModel.DateOfPurchase = DateTime.Parse(_selectedProduct.DateOfPurchase);
-                UpdateProductViewModel.SaleDate = (_selectedProduct.SaleDate != null) ? DateTime.Parse(_selectedProduct.SaleDate) : null;
+                UpdateProductViewModel.SaleDate = (DateTime.TryParse(_selectedProduct.SaleDate, out DateTime result)) ? result : null;
                 UpdateProductViewModel.PurchasePrice = _selectedProduct.PurchasePrice;
                 UpdateProductViewModel.SellingPrice = _selectedProduct.SellingPrice.GetValueOrDefault();
                 UpdateProductViewModel.ShippingPrice = _selectedProduct.ShippingPrice.GetValueOrDefault();
