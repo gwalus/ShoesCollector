@@ -3,16 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesing="http://materialdesigninxaml.net/winfx/xaml/themes"
-             
-             xmlns:converters="clr-namespace:DesktopUI.Converters"
-             
+             xmlns:materialDesing="http://materialdesigninxaml.net/winfx/xaml/themes"             
+             xmlns:converters="clr-namespace:DesktopUI.Converters"             
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:DesktopUI.Views"
              xmlns:metroControls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:userControls="clr-namespace:DesktopUI.UserControls"
+             xmlns:userControls="clr-namespace:DesktopUI.UserControls"             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -79,6 +77,7 @@
         </StackPanel>
         
         <ScrollViewer DockPanel.Dock="Left"
+                      Height="auto"
                       VerticalScrollBarVisibility="Auto"
                       Visibility="{Binding AddProductPanelVisibilityMode}">
             <userControls:AddProductUserControl DockPanel.Dock="Left"
@@ -88,11 +87,11 @@
         <ScrollViewer DockPanel.Dock="Left" 
                       VerticalScrollBarVisibility="Auto"
                       Visibility="{Binding UpdateProductPanelVisibilityMode}">
-            <userControls:AddProductUserControl DockPanel.Dock="Left"
+            <userControls:UpdateProductUserControl DockPanel.Dock="Left"
                                                    DataContext="{Binding UpdateProductViewModel}"/>
 
         </ScrollViewer>
-
+        
         <!--#region Data-->
         <DataGrid ItemsSource="{Binding Products}"
                                   SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
@@ -102,7 +101,6 @@
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   IsReadOnly="True">
-
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Brand" Binding="{Binding Brand}"/>
@@ -149,8 +147,8 @@
             </DataGrid.Columns>
 
             <behaviors:Interaction.Triggers>
-                <behaviors:EventTrigger EventName="SelectedCellsChanged">
-                    <behaviors:InvokeCommandAction Command="{Binding SelectedCellsChanged}"/>
+                <behaviors:EventTrigger EventName="SelectionChanged">
+                    <behaviors:InvokeCommandAction Command="{Binding SelectedProductChangedCommand}"/>
                 </behaviors:EventTrigger>
             </behaviors:Interaction.Triggers>
 

@@ -1,4 +1,5 @@
 ﻿using DesktopUI.ViewModels;
+using Prism.Services.Dialogs;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -8,10 +9,12 @@ namespace DesktopUI.Commands
     public class ShowUpdateProductPanelCommand : ICommand
     {
         private readonly ProductsViewViewModel _viewModel;
+        private readonly IDialogService _dialogService;
 
-        public ShowUpdateProductPanelCommand(ProductsViewViewModel viewModel)
+        public ShowUpdateProductPanelCommand(ProductsViewViewModel viewModel, IDialogService dialogService)
         {
             _viewModel = viewModel;
+            _dialogService = dialogService;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -23,9 +26,25 @@ namespace DesktopUI.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.UpdateProductPanelVisibilityMode = _viewModel.UpdateProductPanelVisibilityMode == Visibility.Collapsed 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            switch (_viewModel.UpdateProductPanelVisibilityMode)
+            {
+                case Visibility.Collapsed:
+                    {
+                        if (_viewModel.SelectedProduct == null)
+                        {
+                            string message = "Please first select any product to update.";
+                            _dialogService.ShowDialog("NotificationDialog", new DialogParameters($"message={message}"), r => { });
+                            break;
+                        }
+                        
+                        _viewModel.UpdateProductPanelVisibilityMode = Visibility.Visible;
+                        break;
+                    }
+
+                default:
+                    _viewModel.UpdateProductPanelVisibilityMode = Visibility.Collapsed;
+                    break;
+            }
         }
     }
 }
