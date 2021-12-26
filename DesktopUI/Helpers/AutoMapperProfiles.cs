@@ -13,6 +13,12 @@ namespace DesktopUI.Helpers
                 .ForMember(dest => dest.Source, opt => opt.MapFrom(src => src.SelectedProductSource))
                 .ForMember(dest => dest.DateOfPurchase, opt => opt.MapFrom(src => src.DateOfPurchase.ToShortDateString()))
                 .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.ProductCode.ToUpper()));
+
+            CreateMap<UpdateProductViewModel, ProductApiToUpdate>()
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.SelectedBrand))
+                .ForMember(dest => dest.Source, opt => opt.MapFrom(src => src.SelectedProductSource))
+                .ForMember(dest => dest.DateOfPurchase, opt => opt.MapFrom(src => src.DateOfPurchase.ToShortDateString()))
+                .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.ProductCode.ToUpper()));
         }
     }
 }
