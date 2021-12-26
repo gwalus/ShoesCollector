@@ -44,8 +44,8 @@ namespace WebAPI.Controllers
         {
             var productToUpdate = _mapper.Map<Product>(productUpdateDto);
 
-            if (await _productRepository.AddAsync(productToUpdate))
-                return Ok("Product has been added");
+            if (await _productRepository.UpdateAsync(productToUpdate))
+                return Ok("Product has been updated successfully");
 
             return BadRequest();
         }
