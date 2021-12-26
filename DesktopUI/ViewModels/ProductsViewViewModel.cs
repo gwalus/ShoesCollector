@@ -12,14 +12,18 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Prism.Ioc;
+using System;
+using AutoMapper;
+using Prism.Services.Dialogs;
 
 namespace DesktopUI.ViewModels
 {
     public class ProductsViewViewModel : BindableBase
     {
         private readonly IDialogCoordinator _dialogCoordinator;
-
-        private Visibility _searchBarVisibilityMode = Visibility.Collapsed;
+        private readonly IMapper _mapper;
+        private readonly IDialogService _dialogService;
+        private Visibility _searchBarVisibilityMode = Visibility.Collapsed;        
 
         public Visibility SearchBarVisibilityMode
         {
@@ -48,9 +52,9 @@ namespace DesktopUI.ViewModels
         public Product SelectedProduct
         {
             get { return _selectedProduct; }
-            set 
+            set
             {
-                _selectedProduct = value; 
+                _selectedProduct = value;
                 SetProperty(ref _selectedProduct, value);
             }
         }
@@ -76,16 +80,11 @@ namespace DesktopUI.ViewModels
 
         private readonly IBaseRestClient _restClient;
 
-        #region Commands
-        public GetProductsCommand GetProductsCommand { get; set; }
-
-        //public ShowUpdatingProductPanelCommand ShowUpdatingProductPanelCommand { get; set; }
-        //public ShowNewProductPanelCommand ShowNewProductPanelCommand { get; set; }
         
+        public GetProductsCommand GetProductsCommand { get; set; }
         public SearchProductInGoogleCommand SearchProductInGoogleCommand { get; set; }
-        #endregion
+        public SelectedProductChangedCommand SelectedProductChangedCommand { get; set; }
 
-        //public TestCommand Test { get; set; }
 
         private AddProductViewModel _addProductViewModel = ContainerLocator.Container.Resolve<AddProductViewModel>();
 
@@ -93,42 +92,35 @@ namespace DesktopUI.ViewModels
         {
             get
             {
-                _addProductViewModel.Header = "Add product";
-                _addProductViewModel.ButtonContent = "Add";
                 return _addProductViewModel;
             }
             set { SetProperty(ref _addProductViewModel, value); }
         }
 
-        private AddProductViewModel _updateProductViewModel = ContainerLocator.Container.Resolve<AddProductViewModel>();
+        private UpdateProductViewModel _updateProductViewModel;
 
-        public AddProductViewModel UpdateProductViewModel
+        public UpdateProductViewModel UpdateProductViewModel
         {
             get
-            {
-                _updateProductViewModel.Header = "Update product";
-                _updateProductViewModel.ButtonContent = "Update";
+            {                
                 return _updateProductViewModel;
             }
             set { SetProperty(ref _updateProductViewModel, value); }
         }
 
-        public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator)
+        public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator, IMapper mapper, IDialogService dialogService)
         {
             _dialogCoordinator = dialogCoordinator;
+            _mapper = mapper;
+            _dialogService = dialogService;
             GetProductsCommand = new GetProductsCommand(this);
 
-            //ShowNewProductPanelCommand = new ShowNewProductPanelCommand(this);
-            //ShowUpdatingProductPanelCommand = new ShowUpdatingProductPanelCommand(this);
-            //SelectedCellsChanged = new SelectedCellsChanged(this);
-            SearchProductInGoogleCommand = new SearchProductInGoogleCommand(this);
-            //AddProductViewModel = new AddProductViewModel(this, dataRepository, dialogCoordinator);
+            SearchProductInGoogleCommand = new SearchProductInGoogleCommand(this);            
 
             ShowSearchBarCommand = new ShowSearchBarCommand(this);
             ShowAddProductPanelCommand = new ShowAddProductPanelCommand(this);
-            ShowUpdateProductPanelCommand = new ShowUpdateProductPanelCommand(this);
-
-            //Test = new TestCommand(this);            
+            ShowUpdateProductPanelCommand = new ShowUpdateProductPanelCommand(this, dialogService);
+            SelectedProductChangedCommand = new SelectedProductChangedCommand(this);                
 
             _restClient = restClient;
         }
@@ -163,10 +155,27 @@ namespace DesktopUI.ViewModels
             await controller.CloseAsync();
         }
 
-        //public void SelectedProductChanged()
-        //{
-        //    UpdateProductViewModel = new UpdateProductViewModel(this, _dataRepository, _dialogCoordinator, _selectedProduct);
-        //}
+        internal void SetProductUpdateModel()
+        {
+            if(_selectedProduct != null)
+            {
+                UpdateProductViewModel = ContainerLocator.Container.Resolve<UpdateProductViewModel>();                
+
+                UpdateProductViewModel.Id = _selectedProduct.Id;
+                UpdateProductViewModel.SelectedBrand = _selectedProduct.Brand;
+                UpdateProductViewModel.Name = _selectedProduct.Name;
+                UpdateProductViewModel.ProductCode = _selectedProduct.ProductCode;
+                UpdateProductViewModel.Color = _selectedProduct.Color;
+                UpdateProductViewModel.Size = _selectedProduct.Size;
+                UpdateProductViewModel.Box = _selectedProduct.Box.GetValueOrDefault();
+                UpdateProductViewModel.SelectedProductSource = _selectedProduct.Source;
+                UpdateProductViewModel.DateOfPurchase = DateTime.Parse(_selectedProduct.DateOfPurchase);
+                UpdateProductViewModel.SaleDate = (_selectedProduct.SaleDate != null) ? DateTime.Parse(_selectedProduct.SaleDate) : null;
+                UpdateProductViewModel.PurchasePrice = _selectedProduct.PurchasePrice;
+                UpdateProductViewModel.SellingPrice = _selectedProduct.SellingPrice.GetValueOrDefault();
+                UpdateProductViewModel.ShippingPrice = _selectedProduct.ShippingPrice.GetValueOrDefault();
+            }
+        }
 
         public void SearchProductInGoogle(string url)
         {
