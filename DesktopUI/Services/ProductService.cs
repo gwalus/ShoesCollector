@@ -79,5 +79,15 @@ namespace DesktopUI.Services
                 Payload = product
             });
         }
+
+        public async Task UpdateProductAsync(ProductApiToUpdate productToUpdate)
+        {
+            await _restClient.CallAsync(new RestClientSettings
+            {
+                Endpoint = ApiUrl.Product,
+                Method = RestSharp.Method.PUT,
+                Payload = productToUpdate
+            });
+        }
     }
 }

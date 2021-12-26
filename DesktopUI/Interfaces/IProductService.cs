@@ -11,5 +11,6 @@ namespace DesktopUI.Interfaces
         Task<List<Product>> GetProducts(ProductSearchFilterViewModel productSearchFilter);
         Task<bool> AddProductAsync(ProductApiToAdd product);
         void SetProductView(List<Product> products);
+        Task UpdateProductAsync(ProductApiToUpdate productToUpdate);
     }
 }
