@@ -2,6 +2,7 @@
 using DesktopUI.Helpers;
 using DesktopUI.Interfaces;
 using DesktopUI.Services;
+using DesktopUI.UserControls;
 using DesktopUI.ViewModels;
 using DesktopUI.Views;
 using Domain.Interfaces.Clients;
@@ -37,7 +38,9 @@ namespace DesktopUI
             containerRegistry.RegisterSingleton<ProductTotalViewModel>();
             containerRegistry.RegisterSingleton<ProductsViewViewModel>();
             containerRegistry.RegisterSingleton<StatisticsViewViewModel>();
-            containerRegistry.RegisterMany<AddProductViewModel>();
+
+            containerRegistry.RegisterSingleton<AddProductViewModel>();
+            containerRegistry.RegisterSingleton<UpdateProductViewModel>();
 
             containerRegistry.RegisterScoped<ITotalService, TotalService>();
             containerRegistry.RegisterScoped<IProductService, ProductService>();
@@ -47,6 +50,7 @@ namespace DesktopUI
             containerRegistry.RegisterScoped<IProductSourceService, ProductSourceService>();
 
             containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
+            containerRegistry.RegisterDialog<NotificationDialog, NotificationDialogViewModel>("NotificationDialog");
         }
     }
 }
