@@ -27,9 +27,9 @@ namespace WebAPI
             services.AddDbContext<ApplicationDbContext>(
                 options =>
                 {
-                    //options.UseNpgsql(
-                    //    Configuration.GetConnectionString("DefaultConnection"),
-                    //    x => x.MigrationsAssembly("DatabaseCore.Migrations")));
+                //options.UseNpgsql(
+                //    Configuration.GetConnectionString("DefaultConnection"),
+                //    x => x.MigrationsAssembly("DatabaseCore.Migrations")));
 
                     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -63,7 +63,7 @@ namespace WebAPI
 
                     // Whether the connection string came from the local development configuration file
                     // or from the environment variable from Heroku, use it to set up your DbContext.
-                    options.UseNpgsql(connStr);
+                    options.UseNpgsql(connStr, x => x.MigrationsAssembly("DatabaseCore.Migrations"));
                 });
                     
             services.AddApplicationRepositories();
