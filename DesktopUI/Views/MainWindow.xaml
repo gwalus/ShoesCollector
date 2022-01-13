@@ -16,6 +16,12 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </mah:MetroWindow.Resources>
 
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <mah:ToggleSwitch OffContent="Light" OnContent="Dark" Toggled="ToggleSwitch_Toggled"/>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -34,7 +40,6 @@
             <TabItem Header="Charts">
                 <!--<views:ChartsPage DataContext="{Binding ChartsViewModel}"/>-->
             </TabItem>
-
         </TabControl>
 
         <Border Grid.Row="1" 
