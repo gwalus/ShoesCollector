@@ -129,8 +129,8 @@ namespace DesktopUI.ViewModels
             }
         }
 
-        private double _sellingPrice = 100.00;
-        public double SellingPrice
+        private double? _sellingPrice = null;
+        public double? SellingPrice
         {
             get { return _sellingPrice; }
             set
@@ -139,8 +139,8 @@ namespace DesktopUI.ViewModels
             }
         }
 
-        private double _shippingPrice = 10.00;
-        public double ShippingPrice
+        private double? _shippingPrice = null;
+        public double? ShippingPrice
         {
             get { return _shippingPrice; }
             set
