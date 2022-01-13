@@ -3,6 +3,7 @@
     public static class ApiUrl
     {
         public const string BaseApiUrl = "http://localhost:5000/";
+        public const string BaseApiProductionUrl = "https://gw-shoes-collector-api.herokuapp.com/";
         public const string API = "api/";
 
         public const string Products = API + "products";
