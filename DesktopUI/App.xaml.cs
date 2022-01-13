@@ -21,6 +21,8 @@ namespace DesktopUI
     {
         protected override Window CreateShell()
         {
+            App.Current.Properties["IsProductionMode"] = 1;
+
             return Container.Resolve<MainWindow>();
         }
 

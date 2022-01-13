@@ -33,7 +33,13 @@ namespace DesktopUI.Services
 
         public string GetUrl(string endpoint)
         {
-            return ApiUrl.BaseApiUrl + endpoint;
+            string isProductionMode = App.Current.Properties["IsProductionMode"].ToString();
+
+            return isProductionMode switch
+            {
+                "1" => ApiUrl.BaseApiProductionUrl + endpoint,
+                _ => ApiUrl.BaseApiUrl + endpoint,
+            };
         }
 
         private static RestRequest GetRequest(RestClientSettings clientSettings)

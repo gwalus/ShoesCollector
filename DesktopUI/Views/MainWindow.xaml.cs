@@ -8,28 +8,32 @@ namespace DesktopUI.Views
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        string _mode = "Light.Taupe";
-
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void ToggleSwitch_Toggled(object sender, System.Windows.RoutedEventArgs e)
+        private void ChangeTheme(object sender, System.Windows.RoutedEventArgs e)
         {
-            switch (_mode)
+            var toggleButton = (sender as ToggleSwitch);
+
+            switch (toggleButton.IsOn)
             {
-                case "Light.Taupe":
+                case true:                
                     ThemeManager.Current.ChangeTheme(this, "Dark.Taupe");
-                    _mode = "Dark.Taupe";
-                    break;
-                case "Dark.Taupe":
-                    ThemeManager.Current.ChangeTheme(this, "Light.Taupe");
-                    _mode = "Light.Taupe";
-                    break;
+                    break;                                    
                 default:
+                    ThemeManager.Current.ChangeTheme(this, "Light.Taupe");
                     break;
             }
         }
+
+        //private void ChangeDbMode(object sender, System.Windows.RoutedEventArgs e)
+        //{
+        //    string isProductionMode = App.Current.Properties["IsProductionMode"].ToString();
+        //    if (isProductionMode == "1")
+        //        App.Current.Properties["IsProductionMode"] = "0";
+        //    else App.Current.Properties["IsProductionMode"] = "1";
+        //}
     }
 }

@@ -18,7 +18,8 @@
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <mah:ToggleSwitch OffContent="Light" OnContent="Dark" Toggled="ToggleSwitch_Toggled"/>
+            <!--<mah:ToggleSwitch OffContent="Dev" OnContent="Prod" Toggled="ChangeDbMode"/>-->
+            <mah:ToggleSwitch IsOn="True" OffContent="Light" OnContent="Dark" Toggled="ChangeTheme"/>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
 
