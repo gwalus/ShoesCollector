@@ -21,6 +21,10 @@ namespace WebAPI
                 var context = services.GetRequiredService<ApplicationDbContext>();
                 await context.Database.MigrateAsync();
                 // SEED DATA IF I CAN
+                await context.Brands.AddAsync(new Domain.Entities.Brand
+                {
+                    Name = "Adidas"
+                });
             }
             catch (Exception ex)
             {
