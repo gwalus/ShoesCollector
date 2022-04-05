@@ -2,6 +2,7 @@
 using DesktopUI.Commands;
 using DesktopUI.Interfaces;
 using DesktopUI.ViewModelDtos;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace DesktopUI.ViewModels
         private readonly IProductSourceService _productSourceService;
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
-
+        private readonly IDialogCoordinator _dialogCoordinator;
         private string _header;
 
         public string Header
@@ -171,7 +172,7 @@ namespace DesktopUI.ViewModels
             }
         }
 
-        private string _buttonContent;
+        private string _buttonContent = "Add";
 
         public string ButtonContent
         {
@@ -184,13 +185,13 @@ namespace DesktopUI.ViewModels
 
         public AddProductCommand AddProductCommand { get; set; }
 
-        public AddProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper)
+        public AddProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper, IDialogCoordinator dialogCoordinator)
         {
             _brandService = brandService;
             _productSourceService = productSourceService;
             _productService = productService;
             _mapper = mapper;
-
+            _dialogCoordinator = dialogCoordinator;
             AddProductCommand = new AddProductCommand(this);
             
             SetModel();
@@ -204,9 +205,39 @@ namespace DesktopUI.ViewModels
 
         internal async void AddProduct(AddProductViewModel addProductViewModel)
         {
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Adding product...");
+            controller.SetIndeterminate();
+
             var productToAdd = _mapper.Map<ProductApiToAdd>(addProductViewModel);
 
-            await _productService.AddProductAsync(productToAdd);
+            try
+            {
+                await _productService.AddProductAsync(productToAdd);
+                await controller.CloseAsync();
+                
+                await _dialogCoordinator.ShowMessageAsync(this, "Success", "Product has been added successfully");
+
+                ResetForm();
+            }
+            catch (Exception)
+            {
+                await _dialogCoordinator.ShowMessageAsync(this, "Error", "Cannot add new product.");
+            }
+        }
+
+        private void ResetForm()
+        {
+            Name = string.Empty;
+            ProductCode = string.Empty;
+            Color = string.Empty;
+            Size = string.Empty;
+            Box = false;
+            DateOfPurchase = DateTime.Today;
+            SaleDate = null;
+            PurchasePrice = 100.00;
+            SellingPrice = null;
+            ShippingPrice = null;
+            SelectedProductSource = null;
         }
     }
 }
