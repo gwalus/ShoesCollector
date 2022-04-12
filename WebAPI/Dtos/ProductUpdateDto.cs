@@ -15,6 +15,5 @@
             public double PurchasePrice { get; set; }
             public double? SellingPrice { get; set; }
             public double? ShippingPrice { get; set; }
-            public bool IsSold { get; set; }
     }
 }
