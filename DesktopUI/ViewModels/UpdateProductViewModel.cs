@@ -2,6 +2,7 @@
 using DesktopUI.Commands;
 using DesktopUI.Interfaces;
 using DesktopUI.ViewModelDtos;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
@@ -18,6 +19,7 @@ namespace DesktopUI.ViewModels
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
         private readonly IDialogService _dialogService;
+        private readonly IDialogCoordinator _dialogCoordinator;
         private string _header = "Update product";
 
         public string Header
@@ -63,7 +65,7 @@ namespace DesktopUI.ViewModels
             get { return _productCode; }
             set
             {
-                SetProperty(ref _productCode, value.ToUpper());
+                SetProperty(ref _productCode, value?.ToUpper());
             }
         }
 
@@ -203,13 +205,14 @@ namespace DesktopUI.ViewModels
         public UpdateProductCommand UpdateProductCommand { get; set; }
 
 
-        public UpdateProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper, IDialogService dialogService)
+        public UpdateProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper, IDialogService dialogService, IDialogCoordinator dialogCoordinator)
         {
             _brandService = brandService;
             _productSourceService = productSourceService;
             _productService = productService;
             _mapper = mapper;
             _dialogService = dialogService;
+            _dialogCoordinator = dialogCoordinator;
             UpdateProductCommand = new UpdateProductCommand(this);
 
             SetModel();
@@ -221,15 +224,22 @@ namespace DesktopUI.ViewModels
             Sources = Task.Run(async () => await _productSourceService.GetProductSourcesAsync()).Result.Select(x => x.Name).ToList();
         }
 
-        internal async void UpdateProduct(UpdateProductViewModel updateProductViewModel)
+        internal async Task UpdateProduct(UpdateProductViewModel updateProductViewModel)
         {
-            var productToUpdate = _mapper.Map<ProductApiToUpdate>(updateProductViewModel);
+            try
+            {
+                var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Updating...");
+                controller.SetIndeterminate();
 
-            string message = string.Empty;
-            await _productService.UpdateProductAsync(productToUpdate);
-                message = $"Product {productToUpdate.Id} {productToUpdate.Name} has been updated";            
+                var productToUpdate = _mapper.Map<ProductApiToUpdate>(updateProductViewModel);
+                await _productService.UpdateProductAsync(productToUpdate);
 
-            _dialogService.ShowDialog("NotificationDialog", new DialogParameters($"message={message}"), null);
+                await controller.CloseAsync();
+            }
+            catch (Exception)
+            {
+                await _dialogCoordinator.ShowMessageAsync(this, "Error", "Cannot update product");
+            }
         }
     }
 }

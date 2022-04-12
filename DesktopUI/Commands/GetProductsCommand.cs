@@ -5,6 +5,7 @@ using System;
 using System.Windows.Input;
 using Prism.Ioc;
 using DesktopUI.Interfaces;
+using System.Threading.Tasks;
 
 namespace DesktopUI.Commands
 {
@@ -22,7 +23,7 @@ namespace DesktopUI.Commands
             return true;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
             var filter = new ProductFilter();
 
@@ -45,7 +46,7 @@ namespace DesktopUI.Commands
                     totalService.SetProductTotalsView(null, filter.Condition);
                     break;
             }
-            _viewModel.GetProducts(filter);
+            await _viewModel.GetProducts(filter);
         }
 
         public event EventHandler CanExecuteChanged;

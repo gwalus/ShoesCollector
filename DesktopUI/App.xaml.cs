@@ -8,6 +8,7 @@ using DesktopUI.Views;
 using Domain.Interfaces.Clients;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Ioc;
+using Prism.Unity;
 using RestSharp;
 using System.Windows;
 using Unity;
@@ -19,6 +20,8 @@ namespace DesktopUI
     /// </summary>
     public partial class App
     {
+        public static IUnityContainer AppContainer { get; set; }
+
         protected override Window CreateShell()
         {
             App.Current.Properties["IsProductionMode"] = 1;
@@ -53,6 +56,8 @@ namespace DesktopUI
 
             containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
             containerRegistry.RegisterDialog<NotificationDialog, NotificationDialogViewModel>("NotificationDialog");
+
+            AppContainer = containerRegistry.GetContainer();
         }
     }
 }

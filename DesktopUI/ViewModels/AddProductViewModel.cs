@@ -203,7 +203,7 @@ namespace DesktopUI.ViewModels
             Sources = Task.Run(async () => await _productSourceService.GetProductSourcesAsync()).Result.Select(x => x.Name).ToList();
         }
 
-        internal async void AddProduct(AddProductViewModel addProductViewModel)
+        internal async Task AddProduct(AddProductViewModel addProductViewModel)
         {
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Adding product...");
             controller.SetIndeterminate();

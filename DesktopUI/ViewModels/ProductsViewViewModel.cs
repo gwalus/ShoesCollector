@@ -15,6 +15,7 @@ using Prism.Ioc;
 using System;
 using AutoMapper;
 using Prism.Services.Dialogs;
+using System.Threading.Tasks;
 
 namespace DesktopUI.ViewModels
 {
@@ -86,12 +87,14 @@ namespace DesktopUI.ViewModels
         public SelectedProductChangedCommand SelectedProductChangedCommand { get; set; }
 
 
-        private AddProductViewModel _addProductViewModel = ContainerLocator.Container.Resolve<AddProductViewModel>();
+        private AddProductViewModel _addProductViewModel;
 
         public AddProductViewModel AddProductViewModel
         {
             get
             {
+                if (_addProductViewModel == null)
+                    return ContainerLocator.Container.Resolve<AddProductViewModel>();
                 return _addProductViewModel;
             }
             set { SetProperty(ref _addProductViewModel, value); }
@@ -125,11 +128,10 @@ namespace DesktopUI.ViewModels
             _restClient = restClient;
         }
 
-        public async void GetProducts(ProductFilter filter)
+        public async Task GetProducts(ProductFilter filter)
         {
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Wait", "Loading products...");
             controller.SetIndeterminate();
-
 
             var restClientSettings = new RestClientSettings
             {
