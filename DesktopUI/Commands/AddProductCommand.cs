@@ -4,6 +4,8 @@ using DesktopUI.ViewModels;
 using Domain.Helpers.Filters;
 using Unity;
 using Prism.Ioc;
+using Domain.Helpers.Enums;
+using DesktopUI.Interfaces;
 
 namespace DesktopUI.Commands
 {
@@ -27,7 +29,11 @@ namespace DesktopUI.Commands
 
         public async void Execute(object parameter)
         {
-            await _viewModel.AddProduct(parameter as AddProductViewModel);
+            await _viewModel.AddProduct(parameter as AddProductViewModel);            
+            
+            var totalService = ContainerLocator.Container.Resolve<ITotalService>();
+            totalService.SetProductTotalsView(null, nameof(ProductFilterEnum.All));
+
             await _productViewModel.GetProducts(new ProductFilter());
         }
     }
