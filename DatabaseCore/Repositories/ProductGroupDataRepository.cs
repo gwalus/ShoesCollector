@@ -23,10 +23,15 @@ namespace DatabaseCore.Repositories
         {
             var products = await _dbContext.Products.ToListAsync();
 
+            var formatInfo = new DateTimeFormatInfo()
+            {
+                ShortDatePattern = "dd.MM.yyyy"
+            };
+
             var groupedSoldLossProducts = products
                 .Where(x => x.IsSold && x.Profit < 0)
-                .OrderByDescending(x => DateTime.Parse(x.SaleDate))
-                .GroupBy(x => new { DateTime.Parse(x.SaleDate).Year, DateTime.Parse(x.SaleDate).Month })
+                .OrderByDescending(x => Convert.ToDateTime(x.SaleDate, formatInfo))
+                .GroupBy(x => new { Convert.ToDateTime(x.SaleDate, formatInfo).Year, Convert.ToDateTime(x.SaleDate, formatInfo).Month })
                 .ToList();
 
             var productGroupDatas = new List<ProductGroupData>();
@@ -52,9 +57,14 @@ namespace DatabaseCore.Repositories
         {
             var products = await _dbContext.Products.ToListAsync();
 
+            var formatInfo = new DateTimeFormatInfo()
+            {
+                ShortDatePattern = "dd.MM.yyyy"
+            };
+
             var groupedPurchaseProducts = products
-                .OrderByDescending(product => DateTime.Parse(product.DateOfPurchase))
-                .GroupBy(product => new { DateTime.Parse(product.DateOfPurchase).Year, DateTime.Parse(product.DateOfPurchase).Month })
+                .OrderByDescending(x => Convert.ToDateTime(x.DateOfPurchase, formatInfo))
+                .GroupBy(product => new { Convert.ToDateTime(product.DateOfPurchase, formatInfo).Year, Convert.ToDateTime(product.DateOfPurchase, formatInfo).Month })
                 .ToList();
 
             var productGroupDatas = new List<ProductGroupData>();
@@ -80,12 +90,15 @@ namespace DatabaseCore.Repositories
         {
             var products = await _dbContext.Products.ToListAsync();
 
-            products.ForEach(x => x.SaleDate = x.SaleDate?.Replace("'", ""));
+            var formatInfo = new DateTimeFormatInfo()
+            {
+                ShortDatePattern = "dd.MM.yyyy"
+            };
 
             var groupedSoldProducts = products
                 .Where(x => x.IsSold)
-                .OrderByDescending(x => DateTime.Parse(x.SaleDate))
-                .GroupBy(x => new { DateTime.Parse(x.SaleDate).Year, DateTime.Parse(x.SaleDate).Month })
+                .OrderByDescending(x => Convert.ToDateTime(x.SaleDate, formatInfo))
+                .GroupBy(x => new { Convert.ToDateTime(x.SaleDate, formatInfo).Year, Convert.ToDateTime(x.SaleDate, formatInfo).Month })
                 .ToList();
 
             var productGroupDatas = new List<ProductGroupData>();
