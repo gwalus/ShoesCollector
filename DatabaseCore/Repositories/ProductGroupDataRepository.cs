@@ -80,6 +80,8 @@ namespace DatabaseCore.Repositories
         {
             var products = await _dbContext.Products.ToListAsync();
 
+            products.ForEach(x => x.SaleDate = x.SaleDate?.Replace("'", ""));
+
             var groupedSoldProducts = products
                 .Where(x => x.IsSold)
                 .OrderByDescending(x => DateTime.Parse(x.SaleDate))
