@@ -66,7 +66,9 @@ namespace DatabaseCore.Repositories
             if (productFilter.Box.HasValue)
                 query = query.Where(x => x.Box.Value == productFilter.Box);
 
-            return await query.ToListAsync();
+            return await query
+                .OrderBy(x => x.Id)
+                .ToListAsync();
         }
 
         public Task<Product> GetByIdAsync()
