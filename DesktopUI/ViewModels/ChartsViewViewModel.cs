@@ -1,9 +1,9 @@
-﻿using DesktopUI.Interfaces;
+﻿using DesktopUI.Commands;
+using DesktopUI.Interfaces;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Prism.Mvvm;
-using System;
 using System.Threading.Tasks;
 
 namespace DesktopUI.ViewModels
@@ -16,13 +16,30 @@ namespace DesktopUI.ViewModels
         {
             _chartService = chartService;
 
-            var brandSeries = Task.Run(async () => await _chartService.GetChartBrandSeries()).Result;
-            var sizesSeries = Task.Run(async () => await _chartService.GetChartSizesSeries()).Result;
-            var colorSeries = Task.Run(async () => await _chartService.GetChartColorSeries()).Result;
+            RefreshChartsCommand = new RefreshChartsCommand(this);
 
             BrandSeriesCollection = new SeriesCollection();
             SizeSeriesCollection = new SeriesCollection();
             ColorSeriesCollection = new SeriesCollection();
+
+            RefreshChartContent();
+        }
+
+        public SeriesCollection BrandSeriesCollection { get; set; }
+        public SeriesCollection SizeSeriesCollection { get; set; }
+        public SeriesCollection ColorSeriesCollection { get; set; }
+
+        public RefreshChartsCommand RefreshChartsCommand { get; set; }
+
+        public void RefreshChartContent()
+        {
+            var brandSeries = Task.Run(async () => await _chartService.GetChartBrandSeries()).Result;
+            var sizesSeries = Task.Run(async () => await _chartService.GetChartSizesSeries()).Result;
+            var colorSeries = Task.Run(async () => await _chartService.GetChartColorSeries()).Result;
+
+            BrandSeriesCollection.Clear();
+            SizeSeriesCollection.Clear();
+            ColorSeriesCollection.Clear();
 
             brandSeries.ForEach(x => BrandSeriesCollection.Add(new PieSeries
             {
@@ -48,9 +65,5 @@ namespace DesktopUI.ViewModels
                 FontSize = 16
             }));
         }
-
-        public SeriesCollection BrandSeriesCollection { get; set; }
-        public SeriesCollection SizeSeriesCollection { get; set; }
-        public SeriesCollection ColorSeriesCollection { get; set; }
     }
 }

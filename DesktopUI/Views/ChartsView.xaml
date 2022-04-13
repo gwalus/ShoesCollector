@@ -16,36 +16,45 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <lvc:PieChart LegendLocation="Bottom" Hoverable="False" Margin="50" Series="{Binding BrandSeriesCollection}">
+        <Menu BorderThickness="0 0 0 1" 
+                  BorderBrush="White"
+                  Focusable="True"
+                  Grid.ColumnSpan="5">
+
+            <MenuItem Header="Refresh" Command="{Binding RefreshChartsCommand}"/>
+        </Menu>
+        
+        <lvc:PieChart Grid.Row="1" LegendLocation="Bottom" Hoverable="False" Margin="50" Series="{Binding BrandSeriesCollection}">
             <lvc:PieChart.DataTooltip>
                 <lvc:DefaultTooltip BulletSize="25"></lvc:DefaultTooltip>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
         
-        <Label Grid.Row="1" Content="Brands" HorizontalAlignment="Center" FontSize="18"/>
+        <Label Grid.Row="2" Content="Brands" HorizontalAlignment="Center" FontSize="18"/>
 
-        <GridSplitter Grid.Column="1" Grid.RowSpan="2" MaxHeight="500" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" MaxHeight="500" HorizontalAlignment="Stretch"/>
 
-        <lvc:PieChart Grid.Column="2" LegendLocation="Bottom" Hoverable="False" Margin="50" Series="{Binding SizeSeriesCollection}">
+        <lvc:PieChart Grid.Row="1" Grid.Column="2" LegendLocation="Bottom" Hoverable="False" Margin="50" Series="{Binding SizeSeriesCollection}">
             <lvc:PieChart.DataTooltip>
                 <lvc:DefaultTooltip BulletSize="25"></lvc:DefaultTooltip>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
 
-        <Label Grid.Row="1" Grid.Column="2" Content="Sizes" HorizontalAlignment="Center" FontSize="18"/>
+        <Label Grid.Row="2" Grid.Column="2" Content="Sizes" HorizontalAlignment="Center" FontSize="18"/>
 
-        <GridSplitter Grid.Column="3" Grid.RowSpan="2" MaxHeight="500" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" MaxHeight="500" HorizontalAlignment="Stretch"/>
 
-        <lvc:PieChart Grid.Column="4" LegendLocation="Bottom" Hoverable="False" Margin="50" Series="{Binding ColorSeriesCollection}">
+        <lvc:PieChart Grid.Row="1" Grid.Column="4" LegendLocation="Bottom" Hoverable="False" Margin="50" Series="{Binding ColorSeriesCollection}">
             <lvc:PieChart.DataTooltip>
                 <lvc:DefaultTooltip BulletSize="25"></lvc:DefaultTooltip>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
 
-        <Label Grid.Row="1" Grid.Column="4" Content="Colors" HorizontalAlignment="Center" FontSize="18"/>
+        <Label Grid.Row="2" Grid.Column="4" Content="Colors" HorizontalAlignment="Center" FontSize="18"/>
     </Grid>
 </UserControl>
