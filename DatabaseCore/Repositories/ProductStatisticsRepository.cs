@@ -3,6 +3,7 @@ using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -92,7 +93,10 @@ namespace DatabaseCore.Repositories
             return await _dbContext.Products.MinAsync(p => p.PurchasePrice);
         }
 
-        private static DateTime? ConvertStringToDateTime(string date) => DateTime.TryParse(date, out DateTime result) ? result : null;
+        private static DateTime? ConvertStringToDateTime(string date) => Convert.ToDateTime(date, new DateTimeFormatInfo()
+        {
+            ShortDatePattern = "dd.MM.yyyy"
+        });        
         private static int CalculateToDays(DateTime date) => (DateTime.Now - date).Days;
     }
 }
