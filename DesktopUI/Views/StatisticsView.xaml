@@ -96,17 +96,17 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <TextBlock Style="{StaticResource Header}" Text="Latest sale"/>
-                <TextBlock Style="{StaticResource Item}" Text="{Binding LatestSale.Name, StringFormat='Product: {0}'}"/>
-                <userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>
+                <TextBlock Style="{StaticResource Header}" Text="First purchase"/>
+                <TextBlock Style="{StaticResource Item}" Text="{Binding FirstPurchase.Name, StringFormat='Product: {0}'}"/>
+                <userControls:StatisticsUserControl DataContext="{Binding FirstPurchase}"/>
 
                 <TextBlock Style="{StaticResource Header}" Text="Latest purchase"/>
                 <TextBlock Style="{StaticResource Item}" Text="{Binding LatestPurchase.Name, StringFormat='Product: {0}'}"/>
                 <userControls:StatisticsUserControl DataContext="{Binding LatestPurchase}"/>
 
-                <TextBlock Style="{StaticResource Header}" Text="First purchase"/>
-                <TextBlock Style="{StaticResource Item}" Text="{Binding FirstPurchase.Name, StringFormat='Product: {0}'}"/>
-                <userControls:StatisticsUserControl DataContext="{Binding FirstPurchase}"/>
+                <TextBlock Style="{StaticResource Header}" Text="Latest sale"/>
+                <TextBlock Style="{StaticResource Item}" Text="{Binding LatestSale.Name, StringFormat='Product: {0}'}"/>
+                <userControls:StatisticsUserControl DataContext="{Binding LatestSale}"/>
             </StackPanel>
         </ScrollViewer>
 

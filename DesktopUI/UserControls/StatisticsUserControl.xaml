@@ -11,7 +11,7 @@
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <Border BorderThickness="1" BorderBrush="White" Padding="10" Margin="3">
+    <Border BorderThickness="1" BorderBrush="White" Padding="10" Margin="3" Visibility="{Binding ., Converter={StaticResource NullToVisibilityConverter}}">
         <StackPanel>
             <StackPanel.Resources>
                 <Style TargetType="{x:Type TextBlock}">
