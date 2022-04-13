@@ -18,7 +18,7 @@ namespace DesktopUI.ViewModels
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
         private readonly IDialogCoordinator _dialogCoordinator;
-        private string _header;
+        private string _header = "Add product";
 
         public string Header
         {
@@ -184,6 +184,7 @@ namespace DesktopUI.ViewModels
         }
 
         public AddProductCommand AddProductCommand { get; set; }
+        public ShowAddProductPanelCommand ShowAddProductPanelCommand { get; set; }
 
         public AddProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper, IDialogCoordinator dialogCoordinator)
         {
@@ -192,8 +193,10 @@ namespace DesktopUI.ViewModels
             _productService = productService;
             _mapper = mapper;
             _dialogCoordinator = dialogCoordinator;
+
             AddProductCommand = new AddProductCommand(this);
-            
+            ShowAddProductPanelCommand = new ShowAddProductPanelCommand();
+
             SetModel();
         }
 

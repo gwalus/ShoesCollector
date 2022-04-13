@@ -3,6 +3,7 @@ using Prism.Services.Dialogs;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Prism.Ioc;
 
 namespace DesktopUI.Commands
 {
@@ -15,6 +16,11 @@ namespace DesktopUI.Commands
         {
             _viewModel = viewModel;
             _dialogService = dialogService;
+        }
+
+        public ShowUpdateProductPanelCommand()
+        {
+            _viewModel = ContainerLocator.Container.Resolve<ProductsViewViewModel>();
         }
 
         public event EventHandler CanExecuteChanged;

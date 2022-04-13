@@ -22,8 +22,6 @@ namespace DesktopUI.ViewModels
     public class ProductsViewViewModel : BindableBase
     {
         private readonly IDialogCoordinator _dialogCoordinator;
-        private readonly IMapper _mapper;
-        private readonly IDialogService _dialogService;
         private Visibility _searchBarVisibilityMode = Visibility.Collapsed;        
 
         public Visibility SearchBarVisibilityMode
@@ -111,11 +109,9 @@ namespace DesktopUI.ViewModels
             set { SetProperty(ref _updateProductViewModel, value); }
         }
 
-        public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator, IMapper mapper, IDialogService dialogService)
+        public ProductsViewViewModel(IBaseRestClient restClient, IDialogCoordinator dialogCoordinator, IDialogService dialogService)
         {
             _dialogCoordinator = dialogCoordinator;
-            _mapper = mapper;
-            _dialogService = dialogService;
             GetProductsCommand = new GetProductsCommand(this);
 
             SearchProductInGoogleCommand = new SearchProductInGoogleCommand(this);            
@@ -183,16 +179,12 @@ namespace DesktopUI.ViewModels
         {
             try
             {
-                Process.Start(url);
+                url = url.Replace("&", "^&");
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
             }
             catch
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    url = url.Replace("&", "^&");
-                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
                     Process.Start("xdg-open", url);
                 }

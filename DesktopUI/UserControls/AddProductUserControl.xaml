@@ -9,14 +9,28 @@
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}">
     <StackPanel>
-        <TextBlock Text="{Binding Header}" 
-                           FontSize="16"
-                           FontWeight="Bold"
-                           FontStyle="Italic"
-                           HorizontalAlignment="Center"
-                           Margin="0 10 0 0"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        </Grid>
 
-        <Border Style="{StaticResource DataBorder}">
+        <Button Width="auto" 
+                Content="^" 
+                Height="1" 
+                Margin="10, 0" 
+                Command="{Binding ShowAddProductPanelCommand}"/>
+        
+        <TextBlock Grid.Row="1" Text="{Binding Header}" 
+                       FontSize="16"
+                       FontWeight="Bold"
+                       FontStyle="Italic"
+                       HorizontalAlignment="Center"
+                       Margin="0 10 0 0"/>
+
+        <Border Grid.Row="2" Style="{StaticResource DataBorder}">
             <StackPanel>
                 <TextBlock Text="Brand:"/>
                 <ComboBox ItemsSource="{Binding Brands}"

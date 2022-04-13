@@ -2,6 +2,7 @@
 using DesktopUI.Interfaces;
 using Domain.Dtos;
 using Domain.Entities;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Mvvm;
 using System.Collections.Generic;
 
@@ -11,12 +12,11 @@ namespace DesktopUI.ViewModels
     {
         private readonly IStatisticsService _statisticsService;
         private readonly IProductGroupDataService _productGroupDataService;
-
         private IList<ProductGroupData> _groupedSoldProducts;
         public IList<ProductGroupData> GroupedSoldProducts
         {
             get { return _groupedSoldProducts; }
-            set { SetProperty(ref _groupedSoldProducts, value);}
+            set { SetProperty(ref _groupedSoldProducts, value); }
         }
 
         private IList<ProductGroupData> _groupedPurchaseProducts;
@@ -75,7 +75,7 @@ namespace DesktopUI.ViewModels
         public int DaysOfLatestSale
         {
             get { return _daysOfLatestSale; }
-            set { SetProperty (ref _daysOfLatestSale, value); }
+            set { SetProperty(ref _daysOfLatestSale, value); }
         }
 
         private double _bestProfit;
@@ -83,36 +83,36 @@ namespace DesktopUI.ViewModels
         public double BestProfit
         {
             get { return _bestProfit; }
-            set { SetProperty (ref _bestProfit, value); }
+            set { SetProperty(ref _bestProfit, value); }
         }
 
         private double _lowestProfit;
         public double LowestProfit
         {
             get { return _lowestProfit; }
-            set { SetProperty (ref _lowestProfit, value); }
+            set { SetProperty(ref _lowestProfit, value); }
         }
 
         private double _biggestPurchase;
         public double BiggestPurchase
         {
             get { return _biggestPurchase; }
-            set { SetProperty (ref _biggestPurchase, value); }
+            set { SetProperty(ref _biggestPurchase, value); }
         }
 
         private double _lowestPurchase;
         public double LowestPurchase
         {
             get { return _lowestPurchase; }
-            set { SetProperty (ref _lowestPurchase, value);}
+            set { SetProperty(ref _lowestPurchase, value); }
         }
 
         public RefreshStatisticsCommand RefreshStatisticsCommand { get; set; }
 
-        public StatisticsViewViewModel(IStatisticsService statisticsService, IProductGroupDataService productGroupDataService)
+        public StatisticsViewViewModel(IStatisticsService statisticsService, IProductGroupDataService productGroupDataServices)
         {
             _statisticsService = statisticsService;
-            _productGroupDataService = productGroupDataService;
+            _productGroupDataService = productGroupDataServices;
 
             RefreshStatisticsCommand = new RefreshStatisticsCommand(this);
 

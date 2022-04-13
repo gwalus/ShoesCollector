@@ -203,6 +203,7 @@ namespace DesktopUI.ViewModels
 
 
         public UpdateProductCommand UpdateProductCommand { get; set; }
+        public ShowUpdateProductPanelCommand ShowUpdateProductPanelCommand { get; set; }
 
 
         public UpdateProductViewModel(IBrandService brandService, IProductSourceService productSourceService, IProductService productService, IMapper mapper, IDialogService dialogService, IDialogCoordinator dialogCoordinator)
@@ -214,6 +215,7 @@ namespace DesktopUI.ViewModels
             _dialogService = dialogService;
             _dialogCoordinator = dialogCoordinator;
             UpdateProductCommand = new UpdateProductCommand(this);
+            ShowUpdateProductPanelCommand = new ShowUpdateProductPanelCommand();
 
             SetModel();
         }
