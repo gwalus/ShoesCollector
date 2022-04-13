@@ -12,10 +12,15 @@ namespace DatabaseCore.Repositories
     public class ProductStatisticsRepository : IProductStatisticsRepository, IProductDatesStatisticsRepository, IProductPricesStatisticsRepository
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly DateTimeFormatInfo _dateTimeFormatInfo;
 
         public ProductStatisticsRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+            _dateTimeFormatInfo = new DateTimeFormatInfo()
+            {
+                ShortDatePattern = "dd.MM.yyyy"
+            };
         }
 
         public async Task<double> GetBestProfitAsync()
@@ -61,24 +66,25 @@ namespace DatabaseCore.Repositories
 
         public async Task<Product> GetFirstPurchaseAsync()
         {
-            return await _dbContext.Products.FirstOrDefaultAsync();
+            var products = await _dbContext.Products.ToListAsync();
+            
+            return products.OrderBy(x => Convert.ToDateTime(x.DateOfPurchase, _dateTimeFormatInfo)).FirstOrDefault();
         }
 
         public async Task<Product> GetLatestPurchaseAsync()
         {
-            var latestPuchase = await _dbContext.Products.ToListAsync();
+            var products = await _dbContext.Products.ToListAsync();
 
-            return latestPuchase
-                .OrderByDescending(p => DateTime.TryParse(p.DateOfPurchase, out DateTime result))
-                .FirstOrDefault();
+            return products.OrderByDescending(x => Convert.ToDateTime(x.DateOfPurchase, _dateTimeFormatInfo)).FirstOrDefault();
         }
 
         public async Task<Product> GetLatestSaleAsync()
         {
-            var latestSale = await _dbContext.Products.ToListAsync();
+            var latestSale = await _dbContext.Products
+                .Where(x => x.IsSold)
+                .ToListAsync();
 
             return latestSale
-                .Where(p => !string.IsNullOrEmpty(p.SaleDate))
                 .OrderByDescending(p => DateTime.Parse(p.SaleDate))
                 .FirstOrDefault();
         }
