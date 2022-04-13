@@ -85,7 +85,7 @@ namespace DatabaseCore.Repositories
                 .ToListAsync();
 
             return latestSale
-                .OrderByDescending(p => DateTime.Parse(p.SaleDate))
+                .OrderByDescending(p => Convert.ToDateTime(p.SaleDate, _dateTimeFormatInfo))
                 .FirstOrDefault();
         }
 
