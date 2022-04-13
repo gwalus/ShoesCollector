@@ -43,6 +43,7 @@ namespace DesktopUI
             containerRegistry.RegisterSingleton<ProductTotalViewModel>();
             containerRegistry.RegisterSingleton<ProductsViewViewModel>();
             containerRegistry.RegisterSingleton<StatisticsViewViewModel>();
+            containerRegistry.RegisterSingleton<ChartsViewViewModel>();
 
             containerRegistry.RegisterSingleton<AddProductViewModel>();
             containerRegistry.RegisterSingleton<UpdateProductViewModel>();
@@ -53,6 +54,7 @@ namespace DesktopUI
             containerRegistry.RegisterScoped<IProductGroupDataService, ProductGroupDataService>();
             containerRegistry.RegisterScoped<IBrandService, BrandService>();
             containerRegistry.RegisterScoped<IProductSourceService, ProductSourceService>();
+            containerRegistry.RegisterScoped<IChartService, ChartService>();
 
             containerRegistry.RegisterSingleton<IDialogCoordinator, DialogCoordinator>();
             containerRegistry.RegisterDialog<NotificationDialog, NotificationDialogViewModel>("NotificationDialog");

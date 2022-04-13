@@ -39,7 +39,7 @@
             </TabItem>
 
             <TabItem Header="Charts">
-                <!--<views:ChartsPage DataContext="{Binding ChartsViewModel}"/>-->
+                <views:ChartsView DataContext="{Binding ChartsViewViewModel}"/>
             </TabItem>
         </TabControl>
 
