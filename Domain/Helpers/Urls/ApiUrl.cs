@@ -11,6 +11,7 @@
         public const string Totals = API + "totals";
         public const string Brands = API + "brands";
         public const string ProductSources = API + "product-sources";
+        public const string Charts = API + "charts-data";
 
         public const string Product = API + "product";
 
@@ -30,6 +31,10 @@
         public const string SoldGroupProductData = Statistics + "/group-sold";
         public const string PurchaseGroupProductData = Statistics + "/group-purchase";
         public const string LossGroupProductData = Statistics + "/group-loss";
+
+        public const string ChartBrands = Charts + "/brands";
+        public const string ChartSizes = Charts + "/sizes";
+        public const string ChartColor = Charts + "/colors";
 
         public const string ProductsQuantity = Totals + "/count";
     }
