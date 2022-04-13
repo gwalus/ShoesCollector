@@ -1,4 +1,5 @@
-﻿using DesktopUI.Interfaces;
+﻿using DesktopUI.Commands;
+using DesktopUI.Interfaces;
 using Domain.Dtos;
 using Domain.Entities;
 using Prism.Mvvm;
@@ -106,10 +107,14 @@ namespace DesktopUI.ViewModels
             set { SetProperty (ref _lowestPurchase, value);}
         }
 
+        public RefreshStatisticsCommand RefreshStatisticsCommand { get; set; }
+
         public StatisticsViewViewModel(IStatisticsService statisticsService, IProductGroupDataService productGroupDataService)
         {
             _statisticsService = statisticsService;
             _productGroupDataService = productGroupDataService;
+
+            RefreshStatisticsCommand = new RefreshStatisticsCommand(this);
 
             SetStatistisc();
             SetGroupedProductStatistics();
