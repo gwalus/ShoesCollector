@@ -63,8 +63,8 @@ namespace DatabaseCore.Repositories
             if (!string.IsNullOrEmpty(productFilter.Source))
                 query = query.Where(x => x.Source.ToLower().Contains(productFilter.Source.ToLower()));
 
-            if (productFilter.Box.HasValue)
-                query = query.Where(x => x.Box.Value == productFilter.Box);
+            //if (productFilter.Box.HasValue)
+            //    query = query.Where(x => x.Box.Value == productFilter.Box);
 
             return await query
                 .OrderBy(x => x.Id)
